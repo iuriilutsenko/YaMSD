@@ -26,6 +26,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View listOfArtists = inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
+        //Создание списка артистов
+        //TODO - сделать так, чтобы отображалось, как в требованиях
         String[] artists = {
                 "Artist 1",
                 "Artist 2",
