@@ -7,12 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.yamsd.ListOfArtistsActivityFragment"
-    tools:showIn="@layout/activity_list_of_artists">
+    tools:context="com.example.android.yamsd.ArtistActivityFragment"
+    tools:showIn="@layout/activity_artist">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 
 </LinearLayout>
