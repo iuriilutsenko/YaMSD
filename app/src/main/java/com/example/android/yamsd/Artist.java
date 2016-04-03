@@ -27,19 +27,19 @@ public class Artist {
     public Uri smallCover;
     public Uri bigCover;
 
-    private String _id = "id";
-    private String _name = "name";
+    private final String _id = "id";
+    private final String _name = "name";
 
-    private String _genres = "genres";
-    private String _tracks = "tracks";
-    private String _albums = "albums";
+    private final String _genres = "genres";
+    private final String _tracks = "tracks";
+    private final String _albums = "albums";
 
-    private String _link = "link";
-    private String _description = "description";
+    private final String _link = "link";
+    private final String _description = "description";
 
-    private String _cover = "cover";
-    private String _bigCover = "big";
-    private String _smallCover = "small";
+    private final String _cover = "cover";
+    private final String _bigCover = "big";
+    private final String _smallCover = "small";
 
     Artist (JSONObject jsonArtist) {
         try {
