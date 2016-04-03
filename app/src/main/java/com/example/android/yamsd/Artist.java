@@ -27,34 +27,46 @@ public class Artist {
     public Uri smallCover;
     public Uri bigCover;
 
+    private String _id = "id";
+    private String _name = "name";
+
+    private String _genres = "genres";
+    private String _tracks = "tracks";
+    private String _albums = "albums";
+
+    private String _link = "link";
+    private String _description = "description";
+
+    private String _cover = "cover";
+    private String _bigCover = "big";
+    private String _smallCover = "small";
+
     Artist (JSONObject jsonArtist) {
         try {
-            this.id = jsonArtist.getInt("id");
-            this.name = jsonArtist.getString("name");
-            Log.v(LOG_TAG, this.name + this.id);
+            this.id = jsonArtist.getInt(_id);
+            this.name = jsonArtist.getString(_name);
 
-            JSONArray genresArray = jsonArtist.getJSONArray("genres");
+            JSONArray genresArray = jsonArtist.getJSONArray(_genres);
             this.genres = new String[genresArray.length()];
             for (int i = 0; i < genresArray.length(); i++) {
                 this.genres[i] = genresArray.getString(i);
-                Log.v(LOG_TAG, this.genres[i]);
             }
 
-            this.tracksCount = jsonArtist.getInt("tracks");
-            this.albumsCount = jsonArtist.getInt("albums");
+            this.tracksCount = jsonArtist.getInt(_tracks);
+            this.albumsCount = jsonArtist.getInt(_albums);
 
-            this.link = jsonArtist.getString("link");
-            this.description = jsonArtist.getString("description");
+            this.link = jsonArtist.getString(_link);
+            this.description = jsonArtist.getString(_description);
 
             this.smallCover =
-                    Uri.parse(jsonArtist.getJSONObject("cover").getString("small"));
+                    Uri.parse(jsonArtist.getJSONObject(_cover).getString(_smallCover));
             this.bigCover =
-                    Uri.parse(jsonArtist.getJSONObject("cover").getString("big"));
+                    Uri.parse(jsonArtist.getJSONObject(_cover).getString(_bigCover));
+
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
-        }
-        catch (NullPointerException e) {
-            Log.e(LOG_TAG, "NullPointerException: " + e);
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Something Not Passed: " + e);
         }
     }
 }

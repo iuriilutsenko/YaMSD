@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+/*
+ *  Описание Activity, отвечающей за вывод информации об отдельном исполнителе
+ */
 public class ArtistActivity extends AppCompatActivity {
 
     @Override
