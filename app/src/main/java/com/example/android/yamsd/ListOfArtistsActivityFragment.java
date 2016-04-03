@@ -1,11 +1,13 @@
 package com.example.android.yamsd;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -50,12 +52,25 @@ public class ListOfArtistsActivityFragment extends Fragment {
             artistsListAdapter =
                     new ArrayAdapter<String>(
                             getActivity(),
-                            R.layout.single_artist,
-                            R.id.single_artist,
+                            R.layout.single_artist_in_list,
+                            R.id.single_artist_in_list,
                             artistsList
                     );
+
+            //Создание ListView, на элементы которой можно нажимать
             ListView listView = (ListView) listOfArtistsView.findViewById(R.id.artists_list);
             listView.setAdapter(artistsListAdapter);
+            listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
+                        artistInfoIntent.putExtra("name", artists[position].name);
+                        artistInfoIntent.putExtra("description", artists[position].description);
+                        startActivity(artistInfoIntent);
+                    }
+                }
+            );
 
             return listOfArtistsView;
         } catch (JSONException e) {

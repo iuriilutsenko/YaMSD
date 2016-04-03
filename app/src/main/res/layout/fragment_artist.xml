@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,5 +10,11 @@
     tools:context="com.example.android.yamsd.ArtistActivityFragment"
     tools:showIn="@layout/activity_artist">
 
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/artist_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:gravity="center_vertical" />
 
-</LinearLayout>
+</FrameLayout>

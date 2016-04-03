@@ -2,7 +2,7 @@
 <!--Вид, отвечающий за создание артиста в списке -->
 <!-- TODO = сделать другой вид-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/single_artist"
+    android:id="@+id/single_artist_in_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
