@@ -1,11 +1,13 @@
-package com.example.android.yamsd;
+package com.example.android.yamsd.ArtistsData;
 
-import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by yurich on 02.04.16.
@@ -24,8 +26,8 @@ public class Artist {
     public String link;
     public String description;
 
-    public Uri smallCover;
-    public Uri bigCover;
+    public URL smallCover;
+    public URL bigCover;
 
     private final String _id = "id";
     private final String _name = "name";
@@ -41,7 +43,7 @@ public class Artist {
     private final String _bigCover = "big";
     private final String _smallCover = "small";
 
-    Artist (JSONObject jsonArtist) {
+    public Artist(JSONObject jsonArtist) {
         try {
             this.id = jsonArtist.getInt(_id);
             this.name = jsonArtist.getString(_name);
@@ -59,14 +61,16 @@ public class Artist {
             this.description = jsonArtist.getString(_description);
 
             this.smallCover =
-                    Uri.parse(jsonArtist.getJSONObject(_cover).getString(_smallCover));
+                    new URL(jsonArtist.getJSONObject(_cover).getString(_smallCover));
             this.bigCover =
-                    Uri.parse(jsonArtist.getJSONObject(_cover).getString(_bigCover));
+                    new URL(jsonArtist.getJSONObject(_cover).getString(_bigCover));
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Something Not Passed: " + e);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Bad URL: " + e);
         }
     }
 }
