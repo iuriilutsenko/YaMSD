@@ -1,16 +1,21 @@
 package com.example.android.yamsd;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 
@@ -18,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,7 +47,31 @@ public class ListOfArtistsActivityFragment extends Fragment {
             "http://cache-default01e.cdn.yandex.net/" +
                     "download.cdn.yandex.net/mobilization-2016/artists.json";
 
+    private String jsonArtists = null;
+    private String fileCacheName = "artistsDownloaded";
+
     public ListOfArtistsActivityFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_refresh) {
+            Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
+            updateArtists(true);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -51,26 +82,17 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
         //Создание списка артистов
         //TODO - сделать так, чтобы отображалось, как в требованиях
-        updateArtists(true);
+        File cache = new File(fileCacheName);
+        if (!cache.exists()) {
+            try {
+                cache.createNewFile();
+                Log.v(LOG_TAG, "Made cache");
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "IOException: " + e);
+            }
+        }
+        updateArtists(!cache.exists());
 
-        //TODO - исправить "костыль", чтобы программа не вылетала при запуске
-        artists = getArtists("[{\n" +
-                "    \"id\": 2915,\n" +
-                "    \"name\": \"Ne-Yo\",\n" +
-                "    \"genres\": [\n" +
-                "      \"rnb\",\n" +
-                "      \"pop\",\n" +
-                "      \"rap\"\n" +
-                "    ],\n" +
-                "    \"tracks\": 256,\n" +
-                "    \"albums\": 152,\n" +
-                "    \"link\": \"http://www.neyothegentleman.com/\",\n" +
-                "    \"description\": \"аОаБаЛаАаДаАб\u0082аЕаЛб\u008C б\u0082б\u0080б\u0091б\u0085 аПб\u0080аЕаМаИаИ а\u0093б\u0080б\u008DаМаМаИ, аАаМаЕб\u0080аИаКаАаНб\u0081аКаИаЙ аПаЕаВаЕб\u0086, аАаВб\u0082аОб\u0080 аПаЕб\u0081аЕаН, аПб\u0080аОаДб\u008Eб\u0081аЕб\u0080, аАаКб\u0082б\u0091б\u0080, б\u0084аИаЛаАаНб\u0082б\u0080аОаП. а\u0092 2009 аГаОаДб\u0083 аЖб\u0083б\u0080аНаАаЛ Billboard аПаОб\u0081б\u0082аАаВаИаЛ а\u009DаИ-а\u0099аО аНаА 57 аМаЕб\u0081б\u0082аО аВ б\u0080аЕаЙб\u0082аИаНаГаЕ ТЋа\u0090б\u0080б\u0082аИб\u0081б\u0082б\u008B аДаЕб\u0081б\u008Fб\u0082аИаЛаЕб\u0082аИб\u008FТЛ.\",\n" +
-                "    \"cover\": {\n" +
-                "      \"small\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/300x300\",\n" +
-                "      \"big\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/1000x1000\"\n" +
-                "    }\n" +
-                "  }]");
         String[] artistsStrings = new String[artists.length];
         for (int i = 0; i < artists.length; i++) {
             artistsStrings[i] = artists[i].name + " - " +
@@ -110,9 +132,32 @@ public class ListOfArtistsActivityFragment extends Fragment {
     //
     private void updateArtists(boolean refreshModeOn) {
         if (refreshModeOn) {
+            //TODO - исправить "костыль", чтобы программа не вылетала при запуске
+            artists = getArtists("[{\n" +
+                    "    \"id\": 1,\n" +
+                    "    \"name\": \"Me\",\n" +
+                    "    \"genres\": [\n" +
+                    "      \"rnb\",\n" +
+                    "      \"pop\",\n" +
+                    "      \"rap\"\n" +
+                    "    ],\n" +
+                    "    \"tracks\": 256,\n" +
+                    "    \"albums\": 152,\n" +
+                    "    \"link\": \"http://www.neyothegentleman.com/\",\n" +
+                    "    \"description\": \"аОаБаЛаАаДаАб\u0082аЕаЛб\u008C б\u0082б\u0080б\u0091б\u0085 аПб\u0080аЕаМаИаИ а\u0093б\u0080б\u008DаМаМаИ, аАаМаЕб\u0080аИаКаАаНб\u0081аКаИаЙ аПаЕаВаЕб\u0086, аАаВб\u0082аОб\u0080 аПаЕб\u0081аЕаН, аПб\u0080аОаДб\u008Eб\u0081аЕб\u0080, аАаКб\u0082б\u0091б\u0080, б\u0084аИаЛаАаНб\u0082б\u0080аОаП. а\u0092 2009 аГаОаДб\u0083 аЖб\u0083б\u0080аНаАаЛ Billboard аПаОб\u0081б\u0082аАаВаИаЛ а\u009DаИ-а\u0099аО аНаА 57 аМаЕб\u0081б\u0082аО аВ б\u0080аЕаЙб\u0082аИаНаГаЕ ТЋа\u0090б\u0080б\u0082аИб\u0081б\u0082б\u008B аДаЕб\u0081б\u008Fб\u0082аИаЛаЕб\u0082аИб\u008FТЛ.\",\n" +
+                    "    \"cover\": {\n" +
+                    "      \"small\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/300x300\",\n" +
+                    "      \"big\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/1000x1000\"\n" +
+                    "    }\n" +
+                    "  }]");
             new ArtistsLoaderTask().execute(site);
+            Log.v(LOG_TAG, "Loaded from internet");
         } else {
+            Log.v(LOG_TAG, "Reading from Cache");
             //TODO - реализовать выгрузку с устройства
+            //Загрузка из файла реализована исключительно из соображений простоты реализации
+            readFromCache();
+            Log.v(LOG_TAG, "Loaded from cache");
         }
     }
 
@@ -151,8 +196,9 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 jsonStream = downloadArtistsConnection.getInputStream();
 
                 //Перевод скаченной строки в артистов
-                String jsonString = readJsonString(jsonStream);
-                artists = getArtists(jsonString);
+                jsonArtists = readJsonString(jsonStream);
+                writeDownToCache(jsonArtists);
+                artists = getArtists(jsonArtists);
                 return artists;
             } finally {
                 if (downloadArtistsConnection != null) {
@@ -207,9 +253,6 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
         }
 
-        //TODO - понять, как сохранить данные,
-        //по возможности освоиться с sqlite
-
     }
 
     private Artist[] getArtists(String jsonString) {
@@ -228,4 +271,48 @@ public class ListOfArtistsActivityFragment extends Fragment {
         return null;
     }
 
+    private void writeDownToCache(String string) {
+        FileOutputStream outputStream = null;
+
+        try {
+            outputStream = getActivity().openFileOutput(fileCacheName, Context.MODE_PRIVATE);
+            outputStream.write(string.getBytes());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "IOException: " + e);
+        }
+    }
+
+    private void readFromCache() {
+        jsonArtists = "";
+        InputStream inputStream = null;
+
+        try {
+            inputStream =
+                    getActivity().openFileInput(fileCacheName);
+
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader =
+                        new InputStreamReader(inputStream);
+                BufferedReader bufferedReader =
+                        new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((receiveString = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(receiveString);
+                }
+
+                jsonArtists = stringBuilder.toString();
+                artists = getArtists(jsonArtists);
+            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "IOException: " + e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "IOException: " + e);
+            }
+        }
+    }
 }
