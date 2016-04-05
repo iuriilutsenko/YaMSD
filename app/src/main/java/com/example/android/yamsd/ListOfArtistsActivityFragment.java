@@ -25,6 +25,7 @@ import org.json.JSONException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -82,16 +83,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
         //Создание списка артистов
         //TODO - сделать так, чтобы отображалось, как в требованиях
-        File cache = new File(fileCacheName);
-        if (!cache.exists()) {
-            try {
-                cache.createNewFile();
-                Log.v(LOG_TAG, "Made cache");
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "IOException: " + e);
-            }
-        }
-        updateArtists(!cache.exists());
+        File cache = new File(getActivity().getFilesDir(), fileCacheName);
+        updateArtists(cacheInit(cache));
 
         String[] artistsStrings = new String[artists.length];
         for (int i = 0; i < artists.length; i++) {
@@ -99,10 +92,10 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     artists[i].albumsCount + " - " +
                     artists[i].tracksCount;
         }
-        List<String> artistsList = new ArrayList<String>(Arrays.asList(artistsStrings));
+        List<String> artistsList = new ArrayList<>(Arrays.asList(artistsStrings));
 
         artistsListAdapter =
-                new ArrayAdapter<String>(
+                new ArrayAdapter<>(
                         getActivity(),
                         R.layout.single_artist_in_list,
                         R.id.single_artist_in_list,
@@ -125,14 +118,12 @@ public class ListOfArtistsActivityFragment extends Fragment {
         );
 
         return listOfArtistsView;
-
-
     }
 
-    //
+
     private void updateArtists(boolean refreshModeOn) {
         if (refreshModeOn) {
-            //TODO - исправить "костыль", чтобы программа не вылетала при запуске
+            // Костыль, срабатывающий при самом первом запуске приложения
             artists = getArtists("[{\n" +
                     "    \"id\": 1,\n" +
                     "    \"name\": \"Me\",\n" +
@@ -153,8 +144,6 @@ public class ListOfArtistsActivityFragment extends Fragment {
             new ArtistsLoaderTask().execute(site);
             Log.v(LOG_TAG, "Loaded from internet");
         } else {
-            Log.v(LOG_TAG, "Reading from Cache");
-            //TODO - реализовать выгрузку с устройства
             //Загрузка из файла реализована исключительно из соображений простоты реализации
             readFromCache();
             Log.v(LOG_TAG, "Loaded from cache");
@@ -197,7 +186,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
                 //Перевод скаченной строки в артистов
                 jsonArtists = readJsonString(jsonStream);
-                writeDownToCache(jsonArtists);
+                writeToCache(jsonArtists);
                 artists = getArtists(jsonArtists);
                 return artists;
             } finally {
@@ -211,27 +200,20 @@ public class ListOfArtistsActivityFragment extends Fragment {
                         Log.e(LOG_TAG, "IOException: " + e);
                     }
                 }
-                return null;
             }
         }
 
         //Считывание нужного нам файла
-        private String readJsonString(InputStream jsonStream) throws IOException{;
+        private String readJsonString(InputStream jsonStream) throws IOException {
             StringBuffer buffer = new StringBuffer();
             String jsonString;
-            if (jsonStream == null) {
-                jsonString = null;
-            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(jsonStream));
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
 
-            if (buffer.length() == 0) {
-                jsonString = null;
-            }
             jsonString = buffer.toString();
 
             return jsonString;
@@ -242,11 +224,11 @@ public class ListOfArtistsActivityFragment extends Fragment {
             super.onPostExecute(result);
 
             artistsListAdapter.clear();
-            for(int i = 0; i < artists.length; i++) {
+            for(Artist artist:artists) {
                 artistsListAdapter.add(
-                        artists[i].name + " - "
-                                + artists[i].albumsCount + " - " +
-                                artists[i].tracksCount
+                        artist.name + " - "
+                                + artist.albumsCount + " - " +
+                                artist.tracksCount
                 );
             }
             artistsListAdapter.notifyDataSetChanged();
@@ -271,14 +253,47 @@ public class ListOfArtistsActivityFragment extends Fragment {
         return null;
     }
 
-    private void writeDownToCache(String string) {
+    //Проверка наличия и содержимого кэша
+    private boolean cacheInit(File file) {
+        try {
+            if (file.exists()) {
+                //Проверка пустоты кэша и его удаление, если кэш пуст
+                BufferedReader buf =
+                        new BufferedReader(new FileReader(file));
+
+                if (buf.readLine() == null) {
+                    file.delete();
+                } else {
+                    return false;
+                }
+            }
+
+            return file.createNewFile();
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "IOException: " + e);
+        }
+
+        return false;
+    }
+
+    private void writeToCache(String string) {
+        Log.v(LOG_TAG, "Writing to cache");
         FileOutputStream outputStream = null;
 
         try {
-            outputStream = getActivity().openFileOutput(fileCacheName, Context.MODE_PRIVATE);
+            outputStream = getContext().openFileOutput(fileCacheName, Context.MODE_PRIVATE);
             outputStream.write(string.getBytes());
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);
+        } finally {
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "IOException: " + e);
+            } catch (NullPointerException e) {
+                Log.e(LOG_TAG, "Null Pointer: " + e);
+            }
         }
     }
 
@@ -288,14 +303,14 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
         try {
             inputStream =
-                    getActivity().openFileInput(fileCacheName);
+                    getContext().openFileInput(fileCacheName);
 
             if (inputStream != null) {
                 InputStreamReader inputStreamReader =
                         new InputStreamReader(inputStream);
                 BufferedReader bufferedReader =
                         new BufferedReader(inputStreamReader);
-                String receiveString = "";
+                String receiveString;
                 StringBuilder stringBuilder = new StringBuilder();
 
                 while ((receiveString = bufferedReader.readLine()) != null) {
@@ -312,6 +327,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 inputStream.close();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "IOException: " + e);
+            } catch (NullPointerException e) {
+                Log.e(LOG_TAG, "Null Pointer: " + e);
             }
         }
     }
