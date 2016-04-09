@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Вид, отвечающий за создание артиста в списке -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:id="@+id/single_artist_in_list"
@@ -11,9 +10,12 @@
 
     <ImageView
         android:id="@+id/artist_image_small"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/dummy_image" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dummy_image"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"

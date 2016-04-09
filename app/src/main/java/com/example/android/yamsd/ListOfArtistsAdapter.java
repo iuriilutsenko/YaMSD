@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
  */
 public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
+    //Кэш для хранения маленьких изображений
+    private LruCache<String, Bitmap> imageCache = null;
+
     private String LOG_TAG = getClass().getSimpleName();
 
     private Context context;
@@ -41,6 +45,15 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         super(context, layoutId, resourceId, artists);
         this.context = context;
         this.artists = artists;
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory()) / 1024;
+        final int cacheSize = maxMemory / 8;
+        imageCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                return bitmap.getByteCount() / 1024;
+            }
+        };
     }
 
     public int getCount() {
@@ -69,7 +82,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         //Изображение артиста
         ImageView singleArtistSmallImage =
                 (ImageView) singleArtistRecord.findViewById(R.id.artist_image_small);
-        loadImage(singleArtistInfo, singleArtistSmallImage);
+        loadImage(singleArtistInfo.id, singleArtistInfo, singleArtistSmallImage);
 
         //Название артиста
         TextView singleArtistTitle =
@@ -98,16 +111,28 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         return singleArtistRecord;
     }
 
-    private void loadImage(Artist artist, ImageView view) {
-        //TODO - реализовать кэширование
-        new ImageLoadTask(view).execute(artist.smallCover);
+    private void loadImage(int resId, Artist artist, ImageView view) {
+        if (artist.smallCover == null) {
+            return ;
+        }
+
+        String imageId = String.valueOf(resId);
+        Bitmap bitmap = getBitmapFromMemCache(imageId);
+
+        if (bitmap != null) {
+            view.setImageBitmap(bitmap);
+        } else {
+            new ImageLoadTask(view, imageId).execute(artist.smallCover);
+        }
     }
 
     private class ImageLoadTask extends AsyncTask<URL, Void, Bitmap> {
         ImageView smallCover;
+        String imageIdInCache;
 
-        public ImageLoadTask(ImageView view) {
+        public ImageLoadTask(ImageView view, String imageIdInCache) {
             this.smallCover = view;
+            this.imageIdInCache = imageIdInCache;
         }
 
         @Override
@@ -133,13 +158,13 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
                 downloadImageConnection.setRequestMethod("GET");
                 downloadImageConnection.setDoInput(true);
 
-                //Начало скачивания
+                //Скачивание
                 downloadImageConnection.connect();
                 int response = downloadImageConnection.getResponseCode();
                 Log.v(LOG_TAG, "Response code: " + response);
                 imageStream = downloadImageConnection.getInputStream();
 
-                //Перевод скаченной строки в артистов
+                //Сохранение изображения
                 return BitmapFactory.decodeStream(imageStream);
             } finally {
                 if (downloadImageConnection != null) {
@@ -158,7 +183,19 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             smallCover.setImageBitmap(bitmap);
+            addBitmapToMemoryCache(imageIdInCache, bitmap);
         }
+    }
+
+    //Функции для работы с кэшем изображений
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemCache(key) == null) {
+            imageCache.put(key, bitmap);
+        }
+    }
+
+    private Bitmap getBitmapFromMemCache(String key) {
+        return imageCache.get(key);
     }
 
     @Override
