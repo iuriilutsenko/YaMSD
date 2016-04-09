@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by yurich on 02.04.16.
+ * Класс артиста
  *
  */
 public class Artist {
@@ -23,7 +23,7 @@ public class Artist {
     public int tracksCount;
     public int albumsCount;
 
-    public String link;
+    public String link = null;
     public String description;
 
     public URL smallCover;
@@ -57,7 +57,9 @@ public class Artist {
             this.tracksCount = jsonArtist.getInt(_tracks);
             this.albumsCount = jsonArtist.getInt(_albums);
 
-            this.link = jsonArtist.getString(_link);
+            if (jsonArtist.has(_link)) {
+                this.link = jsonArtist.getString(_link);
+            }
             this.description = jsonArtist.getString(_description);
 
             this.smallCover =

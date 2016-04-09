@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--Вид, отвечающий за создание артиста в списке -->
-<!-- TODO = сделать другой вид-->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:id="@+id/single_artist_in_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
-</TextView>
+    <ImageView
+        android:id="@+id/artist_image_small"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/dummy_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/artist_title"
+        android:layout_alignTop="@+id/artist_image_small"
+        android:layout_toRightOf="@+id/artist_image_small"
+        android:layout_toEndOf="@+id/artist_image_small"
+        android:textColor="#000000"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/genres"
+        android:layout_below="@+id/artist_title"
+        android:layout_toRightOf="@+id/artist_image_small"
+        android:layout_toEndOf="@+id/artist_image_small"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/albums_songs"
+        android:layout_alignBottom="@+id/artist_image_small"
+        android:layout_toRightOf="@+id/artist_image_small"
+        android:layout_toEndOf="@+id/artist_image_small"
+        android:paddingLeft="10dp" />
+
+
+</RelativeLayout>

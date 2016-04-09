@@ -40,7 +40,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
 
     private Artist[] artists = null;
-    private ArtistsListAdapter artistsListAdapter;
+    private ListOfArtistsAdapter listOfArtistsAdapter;
 
     private String site =
             "http://cache-default01e.cdn.yandex.net/" +
@@ -79,13 +79,12 @@ public class ListOfArtistsActivityFragment extends Fragment {
         View listOfArtistsView = inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
         //Создание списка артистов
-        //TODO - сделать так, чтобы отображалось, как в требованиях
         File cache = new File(getActivity().getFilesDir(), fileCacheName);
         updateArtists(cacheInit(cache));
 
         ArrayList<Artist> artistsList = new ArrayList<>(Arrays.asList(artists));
-        artistsListAdapter =
-                new ArtistsListAdapter(
+        listOfArtistsAdapter =
+                new ListOfArtistsAdapter(
                         getActivity(),
                         R.layout.single_artist_in_list,
                         R.id.single_artist_in_list,
@@ -94,7 +93,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
         //Создание ListView, на элементы которой можно нажимать
         ListView listView = (ListView) listOfArtistsView.findViewById(R.id.artists_list);
-        listView.setAdapter(artistsListAdapter);
+        listView.setAdapter(listOfArtistsAdapter);
         listView.setOnItemClickListener(
             new AdapterView.OnItemClickListener() {
                 @Override
@@ -122,11 +121,11 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     "    ],\n" +
                     "    \"tracks\": 0,\n" +
                     "    \"albums\": 0,\n" +
-                    "    \"link\": \"http://www.example.com/\",\n" +
+                    "    \"link\": \"\",\n" +
                     "    \"description\": \"Nothing to say\",\n" +
                     "    \"cover\": {\n" +
-                    "      \"small\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/300x300\",\n" +
-                    "      \"big\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/1000x1000\"\n" +
+                    "      \"small\": \"\",\n" +
+                    "      \"big\": \"\"\n" +
                     "    }\n" +
                     "  }]");
             Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
@@ -140,8 +139,6 @@ public class ListOfArtistsActivityFragment extends Fragment {
     }
 
 
-
-    //TODO - для реализованного ниже кода СРОЧНО ТРЕБУЕТСЯ РЕФАКТОРИНГ!!!!!
     private class ArtistsLoaderTask extends AsyncTask<String, Void, Artist[]> {
         private final String LOG_TAG = getClass().getSimpleName();
 
@@ -150,7 +147,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
             try {
                 return downloadArtists(params[0]);
             } catch (IOException e) {
-                Log.e(LOG_TAG, "IOException");
+                Log.e(LOG_TAG, "IOException: " + e);
                 return null;
             }
         }
@@ -196,7 +193,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
         private String readJsonString(InputStream jsonStream) throws IOException {
             StringBuffer buffer = new StringBuffer();
             String jsonString;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(jsonStream));
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(jsonStream));
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -212,11 +210,11 @@ public class ListOfArtistsActivityFragment extends Fragment {
         protected void onPostExecute(Artist[] result) {
             super.onPostExecute(result);
 
-            artistsListAdapter.clear();
+            listOfArtistsAdapter.clear();
             for(Artist artist:artists) {
-                artistsListAdapter.add(artist);
+                listOfArtistsAdapter.add(artist);
             }
-            artistsListAdapter.notifyDataSetChanged();
+            listOfArtistsAdapter.notifyDataSetChanged();
         }
 
     }
