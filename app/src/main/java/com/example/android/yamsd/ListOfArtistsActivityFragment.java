@@ -76,7 +76,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View listOfArtistsView = inflater.inflate(R.layout.fragment_list_of_artists, container, false);
+        View listOfArtistsView =
+                inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
         //Создание списка артистов
         File cache = new File(getActivity().getFilesDir(), fileCacheName);
@@ -98,10 +99,20 @@ public class ListOfArtistsActivityFragment extends Fragment {
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Artist artist = artists[position];
+
                     Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
-//                    artistInfoIntent.put
-                    artistInfoIntent.putExtra("name", artists[position].name);
-                    artistInfoIntent.putExtra("description", artists[position].description);
+
+                    artistInfoIntent.putExtra("id", artist.id);
+                    artistInfoIntent.putExtra("name", artist.name);
+
+                    artistInfoIntent.putExtra("genres", artist.genres);
+                    artistInfoIntent.putExtra("tracks", artist.tracksCount);
+                    artistInfoIntent.putExtra("albums", artist.albumsCount);
+
+                    artistInfoIntent.putExtra("description", artist.description);
+
+                    artistInfoIntent.putExtra("bigCover", artist.bigCover);
                     startActivity(artistInfoIntent);
                 }
             }

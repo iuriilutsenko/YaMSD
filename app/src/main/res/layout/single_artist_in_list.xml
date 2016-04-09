@@ -21,22 +21,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/artist_title"
-        android:layout_alignTop="@+id/artist_image_small"
-        android:layout_toRightOf="@+id/artist_image_small"
-        android:layout_toEndOf="@+id/artist_image_small"
-        android:textColor="#000000"
-        android:paddingLeft="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
         android:id="@+id/genres"
+        android:paddingLeft="10dp"
         android:layout_below="@+id/artist_title"
         android:layout_toRightOf="@+id/artist_image_small"
-        android:layout_toEndOf="@+id/artist_image_small"
-        android:paddingLeft="10dp" />
+        android:layout_toEndOf="@+id/artist_image_small" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,6 +36,18 @@
         android:layout_toRightOf="@+id/artist_image_small"
         android:layout_toEndOf="@+id/artist_image_small"
         android:paddingLeft="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Large Text"
+        android:id="@+id/artist_title"
+        android:layout_alignTop="@+id/artist_image_small"
+        android:layout_toRightOf="@+id/artist_image_small"
+        android:layout_toEndOf="@+id/artist_image_small"
+        android:paddingLeft="10dp"
+        android:textColor="#000000" />
 
 
 </RelativeLayout>

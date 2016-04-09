@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.yamsd.ArtistsData.Artist;
@@ -74,8 +73,8 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         //Данные об одном артисте
-        RelativeLayout singleArtistRecord =
-                (RelativeLayout) LayoutInflater
+        View singleArtistRecord =
+                LayoutInflater
                         .from(context)
                         .inflate(R.layout.single_artist_in_list, null);
         Artist singleArtistInfo = artists.get(position);
