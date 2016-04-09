@@ -6,9 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Класс артиста
  *
@@ -26,8 +23,8 @@ public class Artist {
     public String link = null;
     public String description;
 
-    public URL smallCover;
-    public URL bigCover;
+    public String smallCover;
+    public String bigCover;
 
     private final String _id = "id";
     private final String _name = "name";
@@ -63,16 +60,14 @@ public class Artist {
             this.description = jsonArtist.getString(_description);
 
             this.smallCover =
-                    new URL(jsonArtist.getJSONObject(_cover).getString(_smallCover));
+                    jsonArtist.getJSONObject(_cover).getString(_smallCover);
             this.bigCover =
-                    new URL(jsonArtist.getJSONObject(_cover).getString(_bigCover));
+                    jsonArtist.getJSONObject(_cover).getString(_bigCover);
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Something Not Passed: " + e);
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Bad URL: " + e);
         }
     }
 }

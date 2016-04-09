@@ -19,6 +19,7 @@ import com.example.android.yamsd.ArtistsData.Artist;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -112,17 +113,22 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     }
 
     private void loadImage(int resId, Artist artist, ImageView view) {
-        if (artist.smallCover == null) {
-            return ;
-        }
+        try {
+            URL imageUrl = new URL(artist.smallCover);
+            if (artist.smallCover == null) {
+                return;
+            }
 
-        String imageId = String.valueOf(resId);
-        Bitmap bitmap = getBitmapFromMemCache(imageId);
+            String imageId = String.valueOf(resId);
+            Bitmap bitmap = getBitmapFromMemCache(imageId);
 
-        if (bitmap != null) {
-            view.setImageBitmap(bitmap);
-        } else {
-            new ImageLoadTask(view, imageId).execute(artist.smallCover);
+            if (bitmap != null) {
+                view.setImageBitmap(bitmap);
+            } else {
+                new ImageLoadTask(view, imageId).execute(imageUrl);
+            }
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Bad URL: " + e);
         }
     }
 

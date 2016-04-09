@@ -99,6 +99,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
+//                    artistInfoIntent.put
                     artistInfoIntent.putExtra("name", artists[position].name);
                     artistInfoIntent.putExtra("description", artists[position].description);
                     startActivity(artistInfoIntent);
