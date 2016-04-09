@@ -18,9 +18,6 @@ import android.widget.Toast;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +25,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,20 +96,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Artist artist = artists[position];
-
-                    Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
-
-                    artistInfoIntent.putExtra("id", artist.id);
-                    artistInfoIntent.putExtra("name", artist.name);
-
-                    artistInfoIntent.putExtra("genres", artist.genres);
-                    artistInfoIntent.putExtra("tracks", artist.tracksCount);
-                    artistInfoIntent.putExtra("albums", artist.albumsCount);
-
-                    artistInfoIntent.putExtra("description", artist.description);
-
-                    artistInfoIntent.putExtra("bigCover", artist.bigCover);
-                    startActivity(artistInfoIntent);
+                    startActivity(createIntent(artist));
                 }
             }
         );
@@ -122,10 +105,28 @@ public class ListOfArtistsActivityFragment extends Fragment {
     }
 
 
+    private Intent createIntent(Artist artist) {
+        Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
+
+        artistInfoIntent.putExtra("id", artist.id);
+        artistInfoIntent.putExtra("name", artist.name);
+
+        artistInfoIntent.putExtra("genres", artist.genres);
+        artistInfoIntent.putExtra("tracks", artist.tracksCount);
+        artistInfoIntent.putExtra("albums", artist.albumsCount);
+
+        artistInfoIntent.putExtra("description", artist.description);
+
+        artistInfoIntent.putExtra("bigCover", artist.bigCover);
+
+        return artistInfoIntent;
+    }
+
+
     private void updateArtists(boolean refreshModeOn) {
         if (refreshModeOn) {
             // Костыль, срабатывающий при самом первом запуске приложения
-            artists = getArtists("[{\n" +
+            artists = Utility.getArtists("[{\n" +
                     "    \"id\": 0,\n" +
                     "    \"name\": \"0\",\n" +
                     "    \"genres\": [\n" +
@@ -151,100 +152,33 @@ public class ListOfArtistsActivityFragment extends Fragment {
     }
 
 
-    private class ArtistsLoaderTask extends AsyncTask<String, Void, Artist[]> {
+    private class ArtistsLoaderTask extends AsyncTask<String, Void, String> {
         private final String LOG_TAG = getClass().getSimpleName();
 
         @Override
-        protected Artist[] doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             try {
-                return downloadArtists(params[0]);
+                return (String) Utility.downloadData(new URL(params[0]), "json");
             } catch (IOException e) {
                 Log.e(LOG_TAG, "IOException: " + e);
                 return null;
             }
         }
 
-        private Artist[] downloadArtists(String siteWithArtists) throws IOException{
-            InputStream jsonStream = null;
-            URL urlWithArtists = new URL(siteWithArtists);
-            HttpURLConnection downloadArtistsConnection =
-                    (HttpURLConnection)urlWithArtists.openConnection();
-
-            try {
-
-                //Установка связи
-                downloadArtistsConnection.setRequestMethod("GET");
-                downloadArtistsConnection.setDoInput(true);
-
-                //Начало скачивания
-                downloadArtistsConnection.connect();
-                int response = downloadArtistsConnection.getResponseCode();
-                Log.v(LOG_TAG, "Response code: " + response);
-                jsonStream = downloadArtistsConnection.getInputStream();
-
-                //Перевод скаченной строки в артистов
-                jsonArtists = readJsonString(jsonStream);
-                writeToCache(jsonArtists);
-                artists = getArtists(jsonArtists);
-                return artists;
-            } finally {
-                if (downloadArtistsConnection != null) {
-                    downloadArtistsConnection.disconnect();
-                }
-                if (jsonStream != null) {
-                    try {
-                        jsonStream.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "IOException: " + e);
-                    }
-                }
-            }
-        }
-
-        //Считывание нужного нам файла
-        private String readJsonString(InputStream jsonStream) throws IOException {
-            StringBuffer buffer = new StringBuffer();
-            String jsonString;
-            BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(jsonStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line).append("\n");
-            }
-
-            jsonString = buffer.toString();
-
-            return jsonString;
-        }
 
         @Override
-        protected void onPostExecute(Artist[] result) {
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            artists = Utility.getArtists(result);
 
             listOfArtistsAdapter.clear();
             for(Artist artist:artists) {
                 listOfArtistsAdapter.add(artist);
             }
+            writeToCache(result);
             listOfArtistsAdapter.notifyDataSetChanged();
         }
 
-    }
-
-    private Artist[] getArtists(String jsonString) {
-        try {
-            JSONArray jsonArtists =
-                    new JSONArray(jsonString);
-            Artist[] artistsList = new Artist[jsonArtists.length()];
-            for (int i = 0; i < jsonArtists.length(); i++) {
-                artistsList[i] = new Artist(jsonArtists.getJSONObject(i));
-            }
-            return artistsList;
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "Incorrect JSON: " + e);
-        }
-
-        return null;
     }
 
     //Проверка наличия и содержимого кэша
@@ -312,7 +246,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 }
 
                 jsonArtists = stringBuilder.toString();
-                artists = getArtists(jsonArtists);
+                artists = Utility.getArtists(jsonArtists);
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);

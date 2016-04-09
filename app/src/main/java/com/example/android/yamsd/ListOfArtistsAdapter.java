@@ -2,7 +2,6 @@ package com.example.android.yamsd;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.util.LruCache;
@@ -16,8 +15,6 @@ import android.widget.TextView;
 import com.example.android.yamsd.ArtistsData.Artist;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -105,8 +102,10 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         TextView singleArtistsAlbumsAndSongs =
                 (TextView) singleArtistRecord.findViewById(R.id.albums_songs);
         singleArtistsAlbumsAndSongs
-                .setText(singleArtistInfo.albumsCount + " альбомов, " +
-                    singleArtistInfo.tracksCount + " песен"
+                .setText(singleArtistInfo.albumsCount + " " +
+                        Utility.pluralize(singleArtistInfo.albumsCount, "альбом") + ", " +
+                        singleArtistInfo.tracksCount + " " +
+                        Utility.pluralize(singleArtistInfo.tracksCount, "песня")
                 );
         return singleArtistRecord;
     }
@@ -143,46 +142,12 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         @Override
         protected Bitmap doInBackground(URL... params) {
             try {
-                return imageDownloading(params[0]);
+                return (Bitmap) Utility.downloadData(params[0], "bitmap");
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while loading image: " + e);
             }
 
             return null;
-        }
-
-        private Bitmap imageDownloading(URL pageWithPicture) throws IOException{
-            Bitmap bitmap = null;
-            HttpURLConnection downloadImageConnection =
-                    (HttpURLConnection)pageWithPicture.openConnection();
-            InputStream imageStream = null;
-
-            try {
-
-                //Установка связи
-                downloadImageConnection.setRequestMethod("GET");
-                downloadImageConnection.setDoInput(true);
-
-                //Скачивание
-                downloadImageConnection.connect();
-                int response = downloadImageConnection.getResponseCode();
-                Log.v(LOG_TAG, "Response code: " + response);
-                imageStream = downloadImageConnection.getInputStream();
-
-                //Сохранение изображения
-                return BitmapFactory.decodeStream(imageStream);
-            } finally {
-                if (downloadImageConnection != null) {
-                    downloadImageConnection.disconnect();
-                }
-                if (imageStream != null) {
-                    try {
-                        imageStream.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "IOException: " + e);
-                    }
-                }
-            }
         }
 
         @Override

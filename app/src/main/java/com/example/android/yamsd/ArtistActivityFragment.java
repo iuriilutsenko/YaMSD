@@ -2,7 +2,6 @@ package com.example.android.yamsd;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,14 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
  * Фрагмент с информацией об одном артисте
  */
-//TODO - слишком много повторений, возможно, придется вынести несколько функций в один класс Utility
 public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
@@ -57,14 +53,14 @@ public class ArtistActivityFragment extends Fragment {
                     (TextView) artistInfo.findViewById(R.id.artist_genres);
             artistViewGenres.setText(stringSingleArtistGenres);
 
+            int albums = artistInfoIntent.getIntExtra("albums", 0);
+            int tracks = artistInfoIntent.getIntExtra("tracks", 0);
             TextView artistViewSongsAndAlbums =
                     (TextView) artistInfo.findViewById(R.id.albums_songs);
             artistViewSongsAndAlbums
                     .setText(
-                            artistInfoIntent.getIntExtra("albums", 0) +
-                                    " альбомов, " +
-                                    artistInfoIntent.getIntExtra("tracks", 0) +
-                                    " песен"
+                            albums + " " + Utility.pluralize(albums, "альбом") + ", "
+                                    + tracks + " " + Utility.pluralize(tracks, "песня")
                     );
 
             String artistDescription
@@ -90,46 +86,12 @@ public class ArtistActivityFragment extends Fragment {
         @Override
         protected Bitmap doInBackground(URL... params) {
             try {
-                return imageDownloading(params[0]);
+                return (Bitmap) Utility.downloadData(params[0], "bitmap");
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while loading image: " + e);
             }
 
             return null;
-        }
-
-        private Bitmap imageDownloading(URL pageWithPicture) throws IOException{
-            Bitmap bitmap = null;
-            HttpURLConnection downloadImageConnection =
-                    (HttpURLConnection)pageWithPicture.openConnection();
-            InputStream imageStream = null;
-
-            try {
-
-                //Установка связи
-                downloadImageConnection.setRequestMethod("GET");
-                downloadImageConnection.setDoInput(true);
-
-                //Скачивание
-                downloadImageConnection.connect();
-                int response = downloadImageConnection.getResponseCode();
-                Log.v(LOG_TAG, "Response code: " + response);
-                imageStream = downloadImageConnection.getInputStream();
-
-                //Сохранение изображения
-                return BitmapFactory.decodeStream(imageStream);
-            } finally {
-                if (downloadImageConnection != null) {
-                    downloadImageConnection.disconnect();
-                }
-                if (imageStream != null) {
-                    try {
-                        imageStream.close();
-                    } catch (IOException e) {
-                        Log.e(LOG_TAG, "IOException: " + e);
-                    }
-                }
-            }
         }
 
         @Override
