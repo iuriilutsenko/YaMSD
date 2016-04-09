@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,7 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,7 +40,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
 
     private Artist[] artists = null;
-    private ArrayAdapter<String> artistsListAdapter;
+    private ArtistsListAdapter artistsListAdapter;
 
     private String site =
             "http://cache-default01e.cdn.yandex.net/" +
@@ -68,7 +66,6 @@ public class ListOfArtistsActivityFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_refresh) {
-            Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
             updateArtists(true);
             return true;
         }
@@ -86,16 +83,9 @@ public class ListOfArtistsActivityFragment extends Fragment {
         File cache = new File(getActivity().getFilesDir(), fileCacheName);
         updateArtists(cacheInit(cache));
 
-        String[] artistsStrings = new String[artists.length];
-        for (int i = 0; i < artists.length; i++) {
-            artistsStrings[i] = artists[i].name + " - " +
-                    artists[i].albumsCount + " - " +
-                    artists[i].tracksCount;
-        }
-        List<String> artistsList = new ArrayList<>(Arrays.asList(artistsStrings));
-
+        ArrayList<Artist> artistsList = new ArrayList<>(Arrays.asList(artists));
         artistsListAdapter =
-                new ArrayAdapter<>(
+                new ArtistsListAdapter(
                         getActivity(),
                         R.layout.single_artist_in_list,
                         R.id.single_artist_in_list,
@@ -125,22 +115,21 @@ public class ListOfArtistsActivityFragment extends Fragment {
         if (refreshModeOn) {
             // Костыль, срабатывающий при самом первом запуске приложения
             artists = getArtists("[{\n" +
-                    "    \"id\": 1,\n" +
-                    "    \"name\": \"Me\",\n" +
+                    "    \"id\": 0,\n" +
+                    "    \"name\": \"0\",\n" +
                     "    \"genres\": [\n" +
-                    "      \"rnb\",\n" +
-                    "      \"pop\",\n" +
-                    "      \"rap\"\n" +
+                    "      \"rnb\"\n" +
                     "    ],\n" +
-                    "    \"tracks\": 256,\n" +
-                    "    \"albums\": 152,\n" +
-                    "    \"link\": \"http://www.neyothegentleman.com/\",\n" +
-                    "    \"description\": \"аОаБаЛаАаДаАб\u0082аЕаЛб\u008C б\u0082б\u0080б\u0091б\u0085 аПб\u0080аЕаМаИаИ а\u0093б\u0080б\u008DаМаМаИ, аАаМаЕб\u0080аИаКаАаНб\u0081аКаИаЙ аПаЕаВаЕб\u0086, аАаВб\u0082аОб\u0080 аПаЕб\u0081аЕаН, аПб\u0080аОаДб\u008Eб\u0081аЕб\u0080, аАаКб\u0082б\u0091б\u0080, б\u0084аИаЛаАаНб\u0082б\u0080аОаП. а\u0092 2009 аГаОаДб\u0083 аЖб\u0083б\u0080аНаАаЛ Billboard аПаОб\u0081б\u0082аАаВаИаЛ а\u009DаИ-а\u0099аО аНаА 57 аМаЕб\u0081б\u0082аО аВ б\u0080аЕаЙб\u0082аИаНаГаЕ ТЋа\u0090б\u0080б\u0082аИб\u0081б\u0082б\u008B аДаЕб\u0081б\u008Fб\u0082аИаЛаЕб\u0082аИб\u008FТЛ.\",\n" +
+                    "    \"tracks\": 0,\n" +
+                    "    \"albums\": 0,\n" +
+                    "    \"link\": \"http://www.example.com/\",\n" +
+                    "    \"description\": \"Nothing to say\",\n" +
                     "    \"cover\": {\n" +
                     "      \"small\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/300x300\",\n" +
                     "      \"big\": \"http://avatars.yandex.net/get-music-content/15ae00fc.p.2915/1000x1000\"\n" +
                     "    }\n" +
                     "  }]");
+            Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
             new ArtistsLoaderTask().execute(site);
             Log.v(LOG_TAG, "Loaded from internet");
         } else {
@@ -225,14 +214,9 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
             artistsListAdapter.clear();
             for(Artist artist:artists) {
-                artistsListAdapter.add(
-                        artist.name + " - "
-                                + artist.albumsCount + " - " +
-                                artist.tracksCount
-                );
+                artistsListAdapter.add(artist);
             }
             artistsListAdapter.notifyDataSetChanged();
-
         }
 
     }
