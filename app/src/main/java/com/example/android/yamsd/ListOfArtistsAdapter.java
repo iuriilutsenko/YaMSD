@@ -79,20 +79,20 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         //Изображение артиста
         ImageView singleArtistSmallImage =
                 (ImageView) singleArtistRecord.findViewById(R.id.artist_image_small);
-        loadImage(singleArtistInfo.id, singleArtistInfo, singleArtistSmallImage);
+        loadImage(singleArtistInfo.getId(), singleArtistInfo, singleArtistSmallImage);
 
         //Название артиста
         TextView singleArtistTitle =
                 (TextView) singleArtistRecord.findViewById(R.id.artist_title);
-        singleArtistTitle.setText(singleArtistInfo.name);
+        singleArtistTitle.setText(singleArtistInfo.getName());
 
         //Жанры артиста
         TextView singleArtistsGenres =
                 (TextView) singleArtistRecord.findViewById(R.id.genres);
         String stringSingleArtistGenres = "";
-        for (int i = 0; i < singleArtistInfo.genres.length; i++) {
-            stringSingleArtistGenres += singleArtistInfo.genres[i];
-            if (i < singleArtistInfo.genres.length - 1) {
+        for (int i = 0; i < singleArtistInfo.getGenres().length; i++) {
+            stringSingleArtistGenres += singleArtistInfo.getGenres()[i];
+            if (i < singleArtistInfo.getGenres().length - 1) {
                 stringSingleArtistGenres += ", ";
             }
         }
@@ -102,18 +102,32 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         TextView singleArtistsAlbumsAndSongs =
                 (TextView) singleArtistRecord.findViewById(R.id.albums_songs);
         singleArtistsAlbumsAndSongs
-                .setText(singleArtistInfo.albumsCount + " " +
-                        Utility.pluralize(singleArtistInfo.albumsCount, "альбом") + ", " +
-                        singleArtistInfo.tracksCount + " " +
-                        Utility.pluralize(singleArtistInfo.tracksCount, "песня")
+                .setText(new StringBuilder()
+
+                        .append(singleArtistInfo.getAlbumsCount())
+                        .append(" ")
+                        .append(Utility.pluralize(
+                                singleArtistInfo.getAlbumsCount(),
+                                "альбом"
+                        ))
+
+                        .append(", ")
+
+                        .append(singleArtistInfo.getTracksCount())
+                        .append(" ")
+                        .append(Utility.pluralize(
+                                singleArtistInfo.getTracksCount(),
+                                "песня"))
+
+                        .toString()
                 );
         return singleArtistRecord;
     }
 
     private void loadImage(int resId, Artist artist, ImageView view) {
         try {
-            URL imageUrl = new URL(artist.smallCover);
-            if (artist.smallCover == null) {
+            URL imageUrl = new URL(artist.getSmallCoverUrlString());
+            if (artist.getSmallCoverUrlString() == null) {
                 return;
             }
 
@@ -141,6 +155,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
         @Override
         protected Bitmap doInBackground(URL... params) {
+
             try {
                 return (Bitmap) Utility.downloadData(params[0], "bitmap");
             } catch (IOException e) {
@@ -159,8 +174,12 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
     //Функции для работы с кэшем изображений
     private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-        if (getBitmapFromMemCache(key) == null) {
-            imageCache.put(key, bitmap);
+        try {
+            if (getBitmapFromMemCache(key) == null) {
+                imageCache.put(key, bitmap);
+            }
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Unable to load image to cache");
         }
     }
 

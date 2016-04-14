@@ -108,16 +108,16 @@ public class ListOfArtistsActivityFragment extends Fragment {
     private Intent createIntent(Artist artist) {
         Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
 
-        artistInfoIntent.putExtra("id", artist.id);
-        artistInfoIntent.putExtra("name", artist.name);
+        artistInfoIntent.putExtra("id", artist.getId());
+        artistInfoIntent.putExtra("name", artist.getName());
 
-        artistInfoIntent.putExtra("genres", artist.genres);
-        artistInfoIntent.putExtra("tracks", artist.tracksCount);
-        artistInfoIntent.putExtra("albums", artist.albumsCount);
+        artistInfoIntent.putExtra("genres", artist.getGenres());
+        artistInfoIntent.putExtra("tracks", artist.getTracksCount());
+        artistInfoIntent.putExtra("albums", artist.getAlbumsCount());
 
-        artistInfoIntent.putExtra("description", artist.description);
+        artistInfoIntent.putExtra("description", artist.getDescription());
 
-        artistInfoIntent.putExtra("bigCover", artist.bigCover);
+        artistInfoIntent.putExtra("bigCover", artist.getBigCoverUrlString());
 
         return artistInfoIntent;
     }
@@ -171,9 +171,13 @@ public class ListOfArtistsActivityFragment extends Fragment {
             super.onPostExecute(result);
             artists = Utility.getArtists(result);
 
-            listOfArtistsAdapter.clear();
-            for(Artist artist:artists) {
-                listOfArtistsAdapter.add(artist);
+            if (result != null) {
+
+                listOfArtistsAdapter.clear();
+                for (Artist artist : artists) {
+                    listOfArtistsAdapter.add(artist);
+                }
+
             }
             writeToCache(result);
             listOfArtistsAdapter.notifyDataSetChanged();
@@ -214,13 +218,15 @@ public class ListOfArtistsActivityFragment extends Fragment {
             outputStream.write(string.getBytes());
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Nothing to write to cache: " + e);
         } finally {
             try {
                 outputStream.close();
             } catch (IOException e) {
                 Log.e(LOG_TAG, "IOException: " + e);
             } catch (NullPointerException e) {
-                Log.e(LOG_TAG, "Null Pointer: " + e);
+                Log.e(LOG_TAG, "Nothing to close: " + e);
             }
         }
     }

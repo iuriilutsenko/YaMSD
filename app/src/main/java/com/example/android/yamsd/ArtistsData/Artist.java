@@ -13,18 +13,18 @@ import org.json.JSONObject;
 public class Artist {
     private String LOG_TAG = getClass().getSimpleName();
 
-    public int id;
-    public String name;
+    private int id;
+    private String name;
 
-    public String[] genres;
-    public int tracksCount;
-    public int albumsCount;
+    private String[] genres;
+    private int tracksCount;
+    private int albumsCount;
 
-    public String link = null;
-    public String description;
+    private String link = null;
+    private String description;
 
-    public String smallCover;
-    public String bigCover;
+    private String smallCoverUrlString;
+    private String bigCoverUrlString;
 
     private final String _id = "id";
     private final String _name = "name";
@@ -59,9 +59,9 @@ public class Artist {
             }
             this.description = jsonArtist.getString(_description);
 
-            this.smallCover =
+            this.smallCoverUrlString =
                     jsonArtist.getJSONObject(_cover).getString(_smallCover);
-            this.bigCover =
+            this.bigCoverUrlString =
                     jsonArtist.getJSONObject(_cover).getString(_bigCover);
 
         } catch (JSONException e) {
@@ -69,5 +69,41 @@ public class Artist {
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Something Not Passed: " + e);
         }
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String[] getGenres() {
+        return genres;
+    }
+
+    public int getAlbumsCount() {
+        return albumsCount;
+    }
+
+    public int getTracksCount() {
+        return tracksCount;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getSmallCoverUrlString() {
+        return smallCoverUrlString;
+    }
+
+    public String getBigCoverUrlString() {
+        return bigCoverUrlString;
     }
 }

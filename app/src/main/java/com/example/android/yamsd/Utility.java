@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
@@ -51,45 +50,45 @@ public class Utility {
     }
 
 
-
+    //Функция для загрузки данных (картинок или списка исполнителей) из интернета
     public static Object downloadData(URL pageWithPicture, String dataType) throws IOException {
-        Bitmap bitmap = null;
-        HttpURLConnection downloadImageConnection =
+        HttpURLConnection httpURLConnection =
                 (HttpURLConnection)pageWithPicture.openConnection();
-        InputStream imageStream = null;
+        InputStream inputStream = null;
+        Object data = null;
 
         try {
 
             //Установка связи
-            downloadImageConnection.setRequestMethod("GET");
-            downloadImageConnection.setDoInput(true);
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setConnectTimeout(5000);
 
             //Скачивание
-            downloadImageConnection.connect();
-            int response = downloadImageConnection.getResponseCode();
+            httpURLConnection.connect();
+            int response = httpURLConnection.getResponseCode();
             Log.v(LOG_TAG, "Response code: " + response);
-            imageStream = downloadImageConnection.getInputStream();
+            inputStream = httpURLConnection.getInputStream();
 
-            //Сохранение
             if (dataType.equals("bitmap")) {
-                return BitmapFactory.decodeStream(imageStream);
+                data = BitmapFactory.decodeStream(inputStream);
             } else if (dataType.equals("json")) {
-                return readJsonString(imageStream);
+                data = readJsonString(inputStream);
             }
         } finally {
-            if (downloadImageConnection != null) {
-                downloadImageConnection.disconnect();
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
             }
-            if (imageStream != null) {
+            if (inputStream != null) {
                 try {
-                    imageStream.close();
+                    inputStream.close();
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "IOException: " + e);
                 }
             }
         }
 
-        return null;
+        return data;
     }
 
     public static String readJsonString(InputStream jsonStream) throws IOException {
@@ -119,6 +118,8 @@ public class Utility {
             return artistsList;
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "JSON not loaded properly: " + e);
         }
 
         return null;
