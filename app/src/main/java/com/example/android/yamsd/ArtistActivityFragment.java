@@ -71,6 +71,11 @@ public class ArtistActivityFragment extends Fragment {
             artistViewDescription.setText(artistDescription);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Bad URL: " + e);
+        } catch (NullPointerException e) {
+            Log.e(
+                    LOG_TAG,
+                    "Null Pointer Exception while creating view: " + e
+            );
         }
 
         return artistFragment;
@@ -89,6 +94,8 @@ public class ArtistActivityFragment extends Fragment {
                 return (Bitmap) Utility.downloadData(params[0], "bitmap");
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while loading image: " + e);
+            } catch (NullPointerException e){
+                Log.e(LOG_TAG, "Null pointer while loading image: " + e);
             }
 
             return null;
