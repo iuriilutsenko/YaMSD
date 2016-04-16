@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Фрагмент со списком артистов
  */
 public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();

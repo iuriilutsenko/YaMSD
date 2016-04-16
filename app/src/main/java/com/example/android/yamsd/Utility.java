@@ -22,6 +22,7 @@ public class Utility {
 
     private static String LOG_TAG = "Utility";
 
+    //Вспомогательные функции для создания View-шек
     public static String pluralize(int amount, String word) {
         int residue = amount % 100;
 
@@ -47,6 +48,43 @@ public class Utility {
         }
 
         return null;
+    }
+
+    public static String getGenresAsSingleString(String[] genres) {
+        String stringSingleArtistGenres = "";
+
+        for (int i = 0; i < genres.length; i++) {
+            stringSingleArtistGenres += genres[i];
+            if (i < genres.length - 1) {
+                stringSingleArtistGenres += ", ";
+            }
+        }
+
+        return stringSingleArtistGenres;
+    }
+
+    public static String getAlbumsAndTracksAsSingleString(
+            int albumsCount,
+            int tracksCount
+    ) {
+        return new StringBuilder()
+
+                .append(albumsCount)
+                .append(" ")
+                .append(pluralize(
+                        albumsCount,
+                        "альбом"
+                ))
+
+                .append(", ")
+
+                .append(tracksCount)
+                .append(" ")
+                .append(Utility.pluralize(
+                        tracksCount,
+                        "песня"))
+
+                .toString();
     }
 
 
@@ -91,6 +129,8 @@ public class Utility {
         return data;
     }
 
+
+    //Функции для обработки скачанной json-строки
     public static String readJsonString(InputStream jsonStream) throws IOException {
         StringBuffer buffer = new StringBuffer();
         String jsonString;

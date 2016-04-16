@@ -41,17 +41,14 @@ public class ArtistActivityFragment extends Fragment {
                     new URL(artistInfoIntent.getStringExtra("bigCover"))
             );
 
-            String[] genres = artistInfoIntent.getStringArrayExtra("genres");
-            String stringSingleArtistGenres = "";
-            for (int i = 0; i < genres.length; i++) {
-                stringSingleArtistGenres += genres[i];
-                if (i < genres.length - 1) {
-                    stringSingleArtistGenres += ", ";
-                }
-            }
+
             TextView artistViewGenres =
                     (TextView) artistInfo.findViewById(R.id.artist_genres);
-            artistViewGenres.setText(stringSingleArtistGenres);
+            artistViewGenres.setText(
+                    Utility.getGenresAsSingleString(
+                            artistInfoIntent.getStringArrayExtra("genres")
+                    )
+            );
 
             int albums = artistInfoIntent.getIntExtra("albums", 0);
             int tracks = artistInfoIntent.getIntExtra("tracks", 0);
@@ -59,8 +56,10 @@ public class ArtistActivityFragment extends Fragment {
                     (TextView) artistInfo.findViewById(R.id.albums_songs);
             artistViewSongsAndAlbums
                     .setText(
-                            albums + " " + Utility.pluralize(albums, "альбом") + ", "
-                                    + tracks + " " + Utility.pluralize(tracks, "песня")
+                            Utility.getAlbumsAndTracksAsSingleString(
+                                    albums,
+                                    tracks
+                            )
                     );
 
             String artistDescription

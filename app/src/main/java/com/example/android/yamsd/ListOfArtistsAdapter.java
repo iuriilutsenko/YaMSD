@@ -89,37 +89,21 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         //Жанры артиста
         TextView singleArtistsGenres =
                 (TextView) singleArtistRecord.findViewById(R.id.genres);
-        String stringSingleArtistGenres = "";
-        for (int i = 0; i < singleArtistInfo.getGenres().length; i++) {
-            stringSingleArtistGenres += singleArtistInfo.getGenres()[i];
-            if (i < singleArtistInfo.getGenres().length - 1) {
-                stringSingleArtistGenres += ", ";
-            }
-        }
-        singleArtistsGenres.setText(stringSingleArtistGenres);
+        singleArtistsGenres.setText(
+                Utility.getGenresAsSingleString(
+                        singleArtistInfo.getGenres()
+                )
+        );
 
         //Данные о количестве альбомов и песен
         TextView singleArtistsAlbumsAndSongs =
                 (TextView) singleArtistRecord.findViewById(R.id.albums_songs);
         singleArtistsAlbumsAndSongs
-                .setText(new StringBuilder()
-
-                        .append(singleArtistInfo.getAlbumsCount())
-                        .append(" ")
-                        .append(Utility.pluralize(
+                .setText(
+                        Utility.getAlbumsAndTracksAsSingleString(
                                 singleArtistInfo.getAlbumsCount(),
-                                "альбом"
-                        ))
-
-                        .append(", ")
-
-                        .append(singleArtistInfo.getTracksCount())
-                        .append(" ")
-                        .append(Utility.pluralize(
-                                singleArtistInfo.getTracksCount(),
-                                "песня"))
-
-                        .toString()
+                                singleArtistInfo.getTracksCount()
+                        )
                 );
         return singleArtistRecord;
     }
