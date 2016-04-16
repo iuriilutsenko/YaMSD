@@ -9,13 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
     //Кэш для хранения маленьких изображений
-    private LruCache<String, Bitmap> imageCache = null;
+    private LruCache<String, Bitmap> artistListItemCache = null;
 
     private String LOG_TAG = getClass().getSimpleName();
 
@@ -37,15 +34,15 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
             Context context,
             int layoutId,
             int resourceId,
-            ArrayList<Artist> artists)
-    {
+            ArrayList<Artist> artists
+    ) {
         super(context, layoutId, resourceId, artists);
         this.context = context;
         this.artists = artists;
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory()) / 1024;
         final int cacheSize = maxMemory / 8;
-        imageCache = new LruCache<String, Bitmap>(cacheSize) {
+        artistListItemCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
                 return bitmap.getByteCount() / 1024;
@@ -69,79 +66,51 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //Данные об одном артисте
-        View singleArtistRecord =
-                LayoutInflater
-                        .from(context)
-                        .inflate(R.layout.single_artist_in_list, null);
-        Artist singleArtistInfo = artists.get(position);
-
-        //Изображение артиста
-        ImageView singleArtistSmallImage =
-                (ImageView) singleArtistRecord.findViewById(R.id.artist_image_small);
-        loadImage(singleArtistInfo.getId(), singleArtistInfo, singleArtistSmallImage);
-
-        //Название артиста
-        TextView singleArtistTitle =
-                (TextView) singleArtistRecord.findViewById(R.id.artist_title);
-        singleArtistTitle.setText(singleArtistInfo.getName());
-
-        //Жанры артиста
-        TextView singleArtistsGenres =
-                (TextView) singleArtistRecord.findViewById(R.id.genres);
-        singleArtistsGenres.setText(
-                Utility.getGenresAsSingleString(
-                        singleArtistInfo.getGenres()
-                )
-        );
-
-        //Данные о количестве альбомов и песен
-        TextView singleArtistsAlbumsAndSongs =
-                (TextView) singleArtistRecord.findViewById(R.id.albums_songs);
-        singleArtistsAlbumsAndSongs
-                .setText(
-                        Utility.getAlbumsAndTracksAsSingleString(
-                                singleArtistInfo.getAlbumsCount(),
-                                singleArtistInfo.getTracksCount()
-                        )
-                );
-        return singleArtistRecord;
-    }
-
-    private void loadImage(int resId, Artist artist, ImageView view) {
         try {
-            URL imageUrl = new URL(artist.getSmallCoverUrlString());
-            if (artist.getSmallCoverUrlString() == null) {
-                return;
-            }
-
-            String imageId = String.valueOf(resId);
-            Bitmap bitmap = getBitmapFromMemCache(imageId);
-
-            if (bitmap != null) {
-                view.setImageBitmap(bitmap);
-            } else {
-                new ImageLoadTask(view, imageId).execute(imageUrl);
-            }
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Bad URL: " + e);
+            return loadListItem(artists.get(position)).getRootView();
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "getRootView() works incorrectly: " + e);
         }
+
+        return null;
     }
 
-    private class ImageLoadTask extends AsyncTask<URL, Void, Bitmap> {
-        ImageView smallCover;
-        String imageIdInCache;
+    private ArtistViewHolder loadListItem(Artist artist) {
+        ArtistViewHolder viewHolder = new ArtistViewHolder(
+                LayoutInflater.from(context),
+                "ListOfArtists",
+                artist
+        );
+        new listItemLoadTask(viewHolder).execute(artist);
 
-        public ImageLoadTask(ImageView view, String imageIdInCache) {
-            this.smallCover = view;
-            this.imageIdInCache = imageIdInCache;
+        return viewHolder;
+    }
+
+    private class listItemLoadTask
+            extends AsyncTask<Artist, Void, Bitmap> {
+        Artist artist;
+
+        ArtistViewHolder viewHolder;
+
+        public listItemLoadTask(ArtistViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
         }
 
         @Override
-        protected Bitmap doInBackground(URL... params) {
+        protected Bitmap doInBackground(Artist... params) {
 
             try {
-                return (Bitmap) Utility.downloadData(params[0], "bitmap");
+                artist = params[0];
+
+                Bitmap bitmap = getBitmapFromMemCache(String.valueOf(artist.getId()));
+                if (bitmap == null) {
+                    bitmap = (Bitmap) Utility.downloadData(
+                            new URL(params[0].getSmallCoverUrlString()),
+                            "bitmap"
+                    );
+                }
+
+                return bitmap;
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while loading image: " + e);
             }
@@ -151,8 +120,8 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            smallCover.setImageBitmap(bitmap);
-            addBitmapToMemoryCache(imageIdInCache, bitmap);
+            viewHolder.setCoverBitmap(bitmap);
+            addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
         }
     }
 
@@ -160,7 +129,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         try {
             if (getBitmapFromMemCache(key) == null) {
-                imageCache.put(key, bitmap);
+                artistListItemCache.put(key, bitmap);
             }
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Unable to load image to cache");
@@ -168,7 +137,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     }
 
     private Bitmap getBitmapFromMemCache(String key) {
-        return imageCache.get(key);
+        return artistListItemCache.get(key);
     }
 
     @Override

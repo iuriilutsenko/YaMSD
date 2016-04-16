@@ -9,14 +9,12 @@ import android.widget.TextView;
 import com.example.android.yamsd.ArtistsData.Artist;
 
 /**
- * Этот класс создан для ускорения работы приложения за счет переноса
- * создания соответствующих View в фон
+ * Класс ArtistViewHolder
  */
 public class ArtistViewHolder {
     LayoutInflater inflater;
     View rootView;
 
-    Bitmap coverBitmap;
     Artist artist;
 
     ImageView cover;
@@ -33,12 +31,10 @@ public class ArtistViewHolder {
             LayoutInflater inflater,
             String activity,
 
-            Artist artist,
-            Bitmap coverBitmap
+            Artist artist
     ) {
         this.inflater = inflater;
 
-        this.coverBitmap = coverBitmap;
         this.artist = artist;
 
         if (activity.equals("ListOfArtists")) {
@@ -54,7 +50,6 @@ public class ArtistViewHolder {
 
         //Изображение артиста
         cover = (ImageView) rootView.findViewById(R.id.artist_image_small);
-        cover.setImageBitmap(coverBitmap);
 
         //Название артиста
         title = (TextView) rootView.findViewById(R.id.artist_title);
@@ -84,5 +79,9 @@ public class ArtistViewHolder {
 
     public View getRootView() {
         return rootView;
+    }
+
+    public void setCoverBitmap(Bitmap coverBitmap) {
+        cover.setImageBitmap(coverBitmap);
     }
 }

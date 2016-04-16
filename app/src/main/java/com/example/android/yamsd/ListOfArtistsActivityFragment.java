@@ -125,7 +125,9 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
     private void updateArtists(boolean refreshModeOn) {
         if (refreshModeOn) {
-            // Костыль, срабатывающий при самом первом запуске приложения
+            //Костыль, срабатывающий при самом первом запуске приложения
+            //Будет загрузка из данной ниже json-строки, а не из интернета
+            //или кэша
             artists = Utility.getArtists("[{\n" +
                     "    \"id\": 0,\n" +
                     "    \"name\": \"0\",\n" +
@@ -137,8 +139,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     "    \"link\": \"\",\n" +
                     "    \"description\": \"Nothing to say\",\n" +
                     "    \"cover\": {\n" +
-                    "      \"small\": \"\",\n" +
-                    "      \"big\": \"\"\n" +
+                    "      \"small\": \"http://avatars.yandex.net/get-music-content/dfc531f5.p.1080505/300x300\",\n" +
+                    "      \"big\": \"http://avatars.yandex.net/get-music-content/dfc531f5.p.1080505/300x300\"\n" +
                     "    }\n" +
                     "  }]");
             Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
