@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.URL;
-//TODO - реализовать перехват NullPointerException'ов
 /**
  * Фрагмент с информацией об одном артисте
  */
