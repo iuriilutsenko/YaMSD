@@ -27,7 +27,7 @@ public class ArtistViewHolder {
     TextView description;
 
 
-    public ArtistViewHolder(
+    public ArtistViewHolder (
             LayoutInflater inflater,
             String activity,
 
@@ -38,25 +38,21 @@ public class ArtistViewHolder {
         this.artist = artist;
 
         if (activity.equals("ListOfArtists")) {
-            inflateAsListOfArtists();
-        } else if (activity.equals("SingleArtist")) {
-            //inflateAsSingleArtist();
+            inflateViewsForList(R.layout.single_artist_in_list);
+        } else if (activity.equals("Artist")) {
+            inflateViewsForList(R.layout.fragment_artist);
         }
     }
 
-    private void inflateAsListOfArtists() {
+    private void inflateViewsForList(int layoutId) {
         rootView =
-                inflater.inflate(R.layout.single_artist_in_list, null);
+                inflater.inflate(layoutId, null);
 
         //Изображение артиста
-        cover = (ImageView) rootView.findViewById(R.id.artist_image_small);
-
-        //Название артиста
-        title = (TextView) rootView.findViewById(R.id.artist_title);
-        title.setText(artist.getName());
+        cover = (ImageView) rootView.findViewById(R.id.artist_image);
 
         //Жанры артиста
-        genres = (TextView) rootView.findViewById(R.id.genres);
+        genres = (TextView) rootView.findViewById(R.id.artist_genres);
         genres.setText(
                 Utility.getGenresAsSingleString(
                         artist.getGenres()
@@ -65,7 +61,7 @@ public class ArtistViewHolder {
 
         //Данные о количестве альбомов и песен
         albumsAndTracks =
-                (TextView) rootView.findViewById(R.id.albums_songs);
+                (TextView) rootView.findViewById(R.id.albums_tracks);
         albumsAndTracks
                 .setText(
                         Utility.getAlbumsAndTracksAsSingleString(
@@ -74,7 +70,21 @@ public class ArtistViewHolder {
                         )
                 );
 
-        description = null;
+        if (layoutId == R.layout.fragment_artist) {
+            description =
+                    (TextView) rootView.findViewById(R.id.description);
+            description.setText(
+                    String.format(
+                            "%s - %s",
+                            artist.getName(),
+                            artist.getDescription()
+                    )
+            );
+        } else if (layoutId == R.layout.single_artist_in_list) {
+            //Название артиста
+            title = (TextView) rootView.findViewById(R.id.artist_title);
+            title.setText(artist.getName());
+        }
     }
 
     public View getRootView() {

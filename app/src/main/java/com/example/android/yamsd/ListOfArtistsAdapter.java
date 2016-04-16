@@ -76,11 +76,12 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     }
 
     private ArtistViewHolder loadListItem(Artist artist) {
-        ArtistViewHolder viewHolder = new ArtistViewHolder(
-                LayoutInflater.from(context),
-                "ListOfArtists",
-                artist
-        );
+        ArtistViewHolder viewHolder =
+                new ArtistViewHolder(
+                    LayoutInflater.from(context),
+                    "ListOfArtists",
+                    artist
+                );
         new listItemLoadTask(viewHolder).execute(artist);
 
         return viewHolder;

@@ -4,4 +4,6 @@
 
     <string name="title_activity_list_of_artists">Исполнители</string>
     <string name="title_activity_artist">Сведения об исполнителе</string>
+
+    <string name="description">Описание</string>
 </resources>

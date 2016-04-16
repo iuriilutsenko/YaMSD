@@ -9,14 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.example.android.yamsd.ArtistsData.Artist;
 
 import java.io.IOException;
 import java.net.URL;
 /**
  * Фрагмент с информацией об одном артисте
  */
+
 public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
@@ -27,48 +28,25 @@ public class ArtistActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View artistFragment = inflater.inflate(R.layout.fragment_artist, container, false);
-        View artistInfo = artistFragment.findViewById(R.id.artist_info);
 
         try {
 
             Intent artistInfoIntent = getActivity().getIntent();
+            Artist artist =
+                    new Artist(
+                            artistInfoIntent.getStringExtra("name"),
 
-            ImageView artistBigCover =
-                    (ImageView) artistInfo.findViewById(R.id.artist_image_big);
-            new BigImageLoadTask(artistBigCover).execute(
-                    new URL(artistInfoIntent.getStringExtra("bigCover"))
+                            artistInfoIntent.getStringArrayExtra("genres"),
+
+                            artistInfoIntent.getIntExtra("albums", 0),
+                            artistInfoIntent.getIntExtra("tracks", 0),
+
+                            artistInfoIntent.getStringExtra("description"),
+
+                            artistInfoIntent.getStringExtra("bigCover")
             );
 
-
-            TextView artistViewGenres =
-                    (TextView) artistInfo.findViewById(R.id.artist_genres);
-            artistViewGenres.setText(
-                    Utility.getGenresAsSingleString(
-                            artistInfoIntent.getStringArrayExtra("genres")
-                    )
-            );
-
-            int albums = artistInfoIntent.getIntExtra("albums", 0);
-            int tracks = artistInfoIntent.getIntExtra("tracks", 0);
-            TextView artistViewSongsAndAlbums =
-                    (TextView) artistInfo.findViewById(R.id.albums_songs);
-            artistViewSongsAndAlbums
-                    .setText(
-                            Utility.getAlbumsAndTracksAsSingleString(
-                                    albums,
-                                    tracks
-                            )
-                    );
-
-            String artistDescription
-                    = artistInfoIntent.getStringExtra("name") + " - " +
-                    artistInfoIntent.getStringExtra("description");
-            TextView artistViewDescription =
-                    (TextView) artistInfo.findViewById(R.id.description);
-            artistViewDescription.setText(artistDescription);
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Bad URL: " + e);
+            return loadArtistData(artist, inflater).getRootView();
         } catch (NullPointerException e) {
             Log.e(
                     LOG_TAG,
@@ -76,20 +54,44 @@ public class ArtistActivityFragment extends Fragment {
             );
         }
 
-        return artistFragment;
+        return null;
     }
 
-    private class BigImageLoadTask extends AsyncTask<URL, Void, Bitmap> {
-        ImageView cover;
+    private ArtistViewHolder loadArtistData(
+            Artist artist,
+            LayoutInflater inflater
+    ) {
+        ArtistViewHolder viewHolder =
+                new ArtistViewHolder(
+                        inflater,
+                        "Artist",
+                        artist
+                );
+        new loadArtistTask(viewHolder).execute(artist);
 
-        public BigImageLoadTask(ImageView cover) {
-            this.cover = cover;
+        return viewHolder;
+    }
+
+    private class loadArtistTask
+            extends AsyncTask<Artist, Void, Bitmap> {
+        Artist artist;
+
+        ArtistViewHolder viewHolder;
+
+        public loadArtistTask(ArtistViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
         }
 
         @Override
-        protected Bitmap doInBackground(URL... params) {
+        protected Bitmap doInBackground(Artist... params) {
             try {
-                return (Bitmap) Utility.downloadData(params[0], "bitmap");
+                artist = params[0];
+
+                return (Bitmap) Utility.downloadData(
+                        new URL(params[0].getBigCoverUrlString()),
+                        "bitmap"
+                );
+
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error while loading image: " + e);
             } catch (NullPointerException e){
@@ -101,7 +103,7 @@ public class ArtistActivityFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            cover.setImageBitmap(bitmap);
+            viewHolder.setCoverBitmap(bitmap);
         }
     }
 }

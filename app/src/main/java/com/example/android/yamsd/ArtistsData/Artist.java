@@ -71,6 +71,30 @@ public class Artist {
         }
     }
 
+    public Artist(
+            String name,
+
+            String[] genres,
+
+            int tracksCount,
+            int albumsCount,
+
+            String description,
+
+            String bigCoverUrlString
+    ) {
+        this.name = name;
+
+        this.genres = genres;
+
+        this.tracksCount = tracksCount;
+        this.albumsCount = albumsCount;
+
+        this.description = description;
+
+        this.bigCoverUrlString = bigCoverUrlString;
+    }
+
     public int getId() {
         return this.id;
     }
