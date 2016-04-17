@@ -1,0 +1,426 @@
+OpenJDK 64-Bit Server VM warning: ignoring option MaxPermSize=350m; support was removed in 8.0
+[   3856]  ERROR -    #com.intellij.lang.Language - Language with ID 'Markdown' is already registered: class net.nicoulaj.idea.markdown.MarkdownLanguage 
+com.intellij.openapi.diagnostic.Logger$EmptyThrowable
+	at com.intellij.openapi.diagnostic.Logger.error(Logger.java:117)
+	at com.intellij.lang.Language.<init>(Language.java:81)
+	at com.intellij.lang.Language.<init>(Language.java:66)
+	at org.intellij.plugins.markdown.lang.MarkdownLanguage.<init>(MarkdownLanguage.java:25)
+	at org.intellij.plugins.markdown.lang.MarkdownLanguage.<clinit>(MarkdownLanguage.java:22)
+	at org.intellij.plugins.markdown.lang.MarkdownFileType.<init>(MarkdownFileType.java:30)
+	at org.intellij.plugins.markdown.lang.MarkdownFileType.<clinit>(MarkdownFileType.java:27)
+	at org.intellij.plugins.markdown.lang.MarkdownFileTypeFactory.createFileTypes(MarkdownFileTypeFactory.java:25)
+	at com.intellij.openapi.fileTypes.impl.FileTypeManagerImpl.initStandardFileTypes(FileTypeManagerImpl.java:270)
+	at com.intellij.openapi.fileTypes.impl.FileTypeManagerImpl.<init>(FileTypeManagerImpl.java:230)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
+	at org.picocontainer.defaults.InstantiatingComponentAdapter.newInstance(InstantiatingComponentAdapter.java:193)
+	at org.picocontainer.defaults.ConstructorInjectionComponentAdapter$1.run(ConstructorInjectionComponentAdapter.java:220)
+	at org.picocontainer.defaults.ThreadLocalCyclicDependencyGuard.observe(ThreadLocalCyclicDependencyGuard.java:53)
+	at org.picocontainer.defaults.ConstructorInjectionComponentAdapter.getComponentInstance(ConstructorInjectionComponentAdapter.java:248)
+	at com.intellij.util.pico.ConstructorInjectionComponentAdapter.getComponentInstance(ConstructorInjectionComponentAdapter.java:58)
+	at com.intellij.openapi.components.impl.ComponentManagerImpl$ComponentConfigComponentAdapter$1.getComponentInstance(ComponentManagerImpl.java:550)
+	at com.intellij.openapi.components.impl.ComponentManagerImpl$ComponentConfigComponentAdapter.getComponentInstance(ComponentManagerImpl.java:610)
+	at com.intellij.util.pico.DefaultPicoContainer.getLocalInstance(DefaultPicoContainer.java:245)
+	at com.intellij.util.pico.DefaultPicoContainer.getComponentInstance(DefaultPicoContainer.java:211)
+	at com.intellij.openapi.components.impl.ComponentManagerImpl.createComponent(ComponentManagerImpl.java:125)
+	at com.intellij.openapi.application.impl.ApplicationImpl.createComponent(ApplicationImpl.java:354)
+	at com.intellij.openapi.components.impl.ComponentManagerImpl.createComponents(ComponentManagerImpl.java:116)
+	at com.intellij.openapi.components.impl.ComponentManagerImpl.init(ComponentManagerImpl.java:87)
+	at com.intellij.openapi.components.impl.stores.ApplicationStoreImpl.load(ApplicationStoreImpl.java:101)
+	at com.intellij.openapi.application.impl.ApplicationImpl.load(ApplicationImpl.java:499)
+	at com.intellij.openapi.application.impl.ApplicationImpl.load(ApplicationImpl.java:481)
+	at com.intellij.idea.IdeaApplication.run(IdeaApplication.java:170)
+	at com.intellij.idea.MainImpl$1$1$1.run(MainImpl.java:52)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at com.intellij.ide.IdeEventQueue.dispatchEvent(IdeEventQueue.java:362)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+[   3857]  ERROR -    #com.intellij.lang.Language - Android Studio 1.5.1  Build #AI-141.2456560 
+[   3858]  ERROR -    #com.intellij.lang.Language - JDK: 1.8.0_66-internal 
+[   3858]  ERROR -    #com.intellij.lang.Language - VM: OpenJDK 64-Bit Server VM 
+[   3858]  ERROR -    #com.intellij.lang.Language - Vendor: Oracle Corporation 
+[   3858]  ERROR -    #com.intellij.lang.Language - OS: Linux 
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c720' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4215e10' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4215e10' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab403c6a0' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4287490' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4287490' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4287490' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4287490' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4287490' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab42d7800' of type 'JawImpl_2058'
+
+(java:17220): GLib-GObject-WARNING **: /build/glib2.0-MuyBSS/glib2.0-2.46.2/./gobject/gsignal.c:3484: signal name 'selection_changed' is invalid for instance '0x7f1ab4325eb0' of type 'JawImpl_2058'
+[ 855093]   WARN - ution.process.OSProcessHandler - Cannot kill process tree. Trying to destroy process using Java API. Cmdline:
+/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:46419,suspend=y,server=n -ea -javaagent:/home/yurich/android-studio/plugins/Groovy/lib/agent/gragent.jar -Dfile.encoding=UTF-8 -classpath /home/yurich/android-studio/lib/idea_rt.jar:/home/yurich/android-studio/plugins/junit/lib/junit-rt.jar:/home/yurich/Android/android-sdk-linux/platforms/android-23/data/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/classes/test/debug:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/classes/debug:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/jars/classes.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.1/res:/home/yurich/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/classes.jar:/home/yurich/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar:/home/yurich/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar:/home/yurich/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-core/1.10.19/e8546f5bef4e061d8dd73895b4e8f40e3fe6effe/mockito-core-1.10.19.jar:/home/yurich/Android/android-sdk-linux/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/jars/classes.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.1/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar:/home/yurich/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/87c0ea803b69252868d09308b4618f766f135a96/objenesis-2.1.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/res:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/sourceFolderJavaResources/test/debug:/home/yurich/AndroidProjects/YaMSD/app/build/intermediates/sourceFolderJavaResources/debug:/home/yurich/AndroidProjects/YaMSD/build/generated/mockable-android-23.default-values.jar com.intellij.rt.execution.junit.JUnitStarter -ideVersion5 @/tmp/idea_junit0.tmp @w@/tmp/idea_working_dirs_junit0.tmp -socket39848 
+[ 856146]   WARN - api.vfs.impl.local.FileWatcher - Watcher terminated with exit code 0 
