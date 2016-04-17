@@ -28,7 +28,7 @@ public class Utility {
 
         if (11 <= residue && residue <= 19 ||
                 residue % 10 == 0 ||
-                5 <= residue % 10  && residue % 10 <= 9){
+                5 <= residue % 10  && residue % 10 <= 9) {
             if (word.equals("альбом")) {
                 return "альбомов";
             } else if (word.equals("песня")) {
@@ -100,7 +100,6 @@ public class Utility {
             //Установка связи
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.setDoInput(true);
-            httpURLConnection.setConnectTimeout(5000);
 
             //Скачивание
             httpURLConnection.connect();

@@ -109,6 +109,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
                             new URL(params[0].getSmallCoverUrlString()),
                             "bitmap"
                     );
+                    addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
                 }
 
                 return bitmap;
@@ -122,7 +123,6 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             viewHolder.setCoverBitmap(bitmap);
-            addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
         }
     }
 
