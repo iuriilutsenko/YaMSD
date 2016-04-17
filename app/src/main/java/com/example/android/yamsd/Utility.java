@@ -50,18 +50,6 @@ public class Utility {
         return null;
     }
 
-    public static String getGenresAsSingleString(String[] genres) {
-        String stringSingleArtistGenres = "";
-
-        for (int i = 0; i < genres.length; i++) {
-            stringSingleArtistGenres += genres[i];
-            if (i < genres.length - 1) {
-                stringSingleArtistGenres += ", ";
-            }
-        }
-
-        return stringSingleArtistGenres;
-    }
 
     public static String getAlbumsAndTracksAsSingleString(
             int albumsCount,
@@ -88,10 +76,31 @@ public class Utility {
     }
 
 
+    public static String getGenresAsSingleString(String[] genres) {
+        try {
+            String stringSingleArtistGenres = "";
+
+            for (int i = 0; i < genres.length; i++) {
+                stringSingleArtistGenres += genres[i];
+                if (i < genres.length - 1) {
+                    stringSingleArtistGenres += ", ";
+                }
+            }
+
+            return stringSingleArtistGenres;
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "No data on genres");
+        }
+
+        return null;
+    }
+
+
     //Функция для загрузки данных (картинок или списка исполнителей) из интернета
-    public static Object downloadData(URL pageWithPicture, String dataType) throws IOException {
+    public static Object downloadData(URL pageWithData, String dataType)
+            throws IOException {
         HttpURLConnection httpURLConnection =
-                (HttpURLConnection)pageWithPicture.openConnection();
+                (HttpURLConnection)pageWithData.openConnection();
         InputStream inputStream = null;
         Object data = null;
 
@@ -129,8 +138,9 @@ public class Utility {
     }
 
 
-    //Функции для обработки скачанной json-строки
-    public static String readJsonString(InputStream jsonStream) throws IOException {
+    //Функции для считывания и обработки скачанной json-строки
+    public static String readJsonString(InputStream jsonStream)
+            throws IOException {
         StringBuffer buffer = new StringBuffer();
         String jsonString;
         BufferedReader reader =
@@ -150,10 +160,12 @@ public class Utility {
         try {
             JSONArray jsonArtists =
                     new JSONArray(jsonString);
+
             Artist[] artistsList = new Artist[jsonArtists.length()];
             for (int i = 0; i < jsonArtists.length(); i++) {
                 artistsList[i] = new Artist(jsonArtists.getJSONObject(i));
             }
+
             return artistsList;
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
