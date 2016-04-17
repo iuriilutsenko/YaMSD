@@ -116,6 +116,7 @@ public class Utility {
             Log.v(LOG_TAG, "Response code: " + response);
             inputStream = httpURLConnection.getInputStream();
 
+            //Сохранение
             if (dataType.equals("bitmap")) {
                 data = BitmapFactory.decodeStream(inputStream);
             } else if (dataType.equals("json")) {
