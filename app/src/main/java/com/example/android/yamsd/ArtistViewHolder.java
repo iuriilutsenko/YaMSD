@@ -44,6 +44,7 @@ public class ArtistViewHolder {
         }
     }
 
+
     private void inflateViewsForList(int layoutId) {
         rootView =
                 inflater.inflate(layoutId, null);
@@ -64,7 +65,7 @@ public class ArtistViewHolder {
                 (TextView) rootView.findViewById(R.id.albums_tracks);
         albumsAndTracks
                 .setText(
-                        Utility.getAlbumsAndTracksAsSingleString(
+                        Utility.getAlbumsAndTracksAsString(
                                 artist.getAlbumsCount(),
                                 artist.getTracksCount()
                         )
@@ -87,9 +88,11 @@ public class ArtistViewHolder {
         }
     }
 
+
     public View getRootView() {
         return rootView;
     }
+
 
     public void setCoverBitmap(Bitmap coverBitmap) {
         cover.setImageBitmap(coverBitmap);

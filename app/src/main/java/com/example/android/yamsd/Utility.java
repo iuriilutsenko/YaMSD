@@ -1,6 +1,8 @@
 package com.example.android.yamsd;
 
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.android.yamsd.ArtistsData.Artist;
@@ -22,7 +24,9 @@ public class Utility {
 
     private static String LOG_TAG = "Utility";
 
+
     //Вспомогательные функции для создания View-шек
+    @Nullable
     public static String pluralize(int amount, String word) {
         int residue = amount % 100;
 
@@ -51,7 +55,8 @@ public class Utility {
     }
 
 
-    public static String getAlbumsAndTracksAsSingleString(
+    @NonNull
+    public static String getAlbumsAndTracksAsString(
             int albumsCount,
             int tracksCount
     ) {
@@ -76,6 +81,7 @@ public class Utility {
     }
 
 
+    @Nullable
     public static String getGenresAsSingleString(String[] genres) {
         try {
             String stringSingleArtistGenres = "";
@@ -156,6 +162,7 @@ public class Utility {
 
         return jsonString;
     }
+
 
     public static Artist[] getArtists(String jsonString) {
         try {

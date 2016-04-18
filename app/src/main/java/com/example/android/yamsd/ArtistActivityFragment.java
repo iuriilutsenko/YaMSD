@@ -22,8 +22,10 @@ public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
 
+
     public ArtistActivityFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +59,7 @@ public class ArtistActivityFragment extends Fragment {
         return null;
     }
 
+
     private ArtistViewHolder loadArtistData(
             Artist artist,
             LayoutInflater inflater
@@ -72,15 +75,18 @@ public class ArtistActivityFragment extends Fragment {
         return viewHolder;
     }
 
+
     private class loadArtistTask
             extends AsyncTask<Artist, Void, Bitmap> {
         Artist artist;
 
         ArtistViewHolder viewHolder;
 
+
         public loadArtistTask(ArtistViewHolder viewHolder) {
             this.viewHolder = viewHolder;
         }
+
 
         @Override
         protected Bitmap doInBackground(Artist... params) {
@@ -100,6 +106,7 @@ public class ArtistActivityFragment extends Fragment {
 
             return null;
         }
+
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {

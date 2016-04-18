@@ -30,6 +30,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
     private ArrayList<Artist> artists;
 
+
     public ListOfArtistsAdapter(
             Context context,
             int layoutId,
@@ -50,13 +51,16 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         };
     }
 
+
     public int getCount() {
         return artists.size();
     }
 
+
     public Artist getItem(int position) {
         return artists.get(position);
     }
+
 
     public long getItemId(int position) {
         return position;
@@ -75,6 +79,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         return null;
     }
 
+
     private ArtistViewHolder loadListItem(Artist artist) {
         ArtistViewHolder viewHolder =
                 new ArtistViewHolder(
@@ -86,6 +91,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
         return viewHolder;
     }
+
 
     private class listItemLoadTask
             extends AsyncTask<Artist, Void, Bitmap> {
@@ -120,11 +126,13 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
             return null;
         }
 
+
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             viewHolder.setCoverBitmap(bitmap);
         }
     }
+
 
     //Функции для работы с кэшем изображений
     private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
@@ -137,9 +145,11 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         }
     }
 
+
     private Bitmap getBitmapFromMemCache(String key) {
         return artistListItemCache.get(key);
     }
+
 
     @Override
     public void clear() {

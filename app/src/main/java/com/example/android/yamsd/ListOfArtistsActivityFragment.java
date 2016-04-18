@@ -32,21 +32,25 @@ import java.util.Arrays;
 /**
  * Фрагмент со списком артистов
  */
+
+//TODO - реализовать поиск по артистам
 public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
 
     private Artist[] artists = null;
     private ListOfArtistsAdapter listOfArtistsAdapter;
 
-    private String site =
+    private String siteWithArtists =
             "http://cache-default01e.cdn.yandex.net/" +
                     "download.cdn.yandex.net/mobilization-2016/artists.json";
 
-    private String jsonArtists = null;
+    private String artistsListJsonFormat = null;
     private String fileCacheName = "artistsDownloaded";
+
 
     public ListOfArtistsActivityFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,10 +58,12 @@ public class ListOfArtistsActivityFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -67,6 +73,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,7 +151,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     "    }\n" +
                     "  }]");
             Toast.makeText(getContext(), "Обновление...", Toast.LENGTH_SHORT).show();
-            new ArtistsLoaderTask().execute(site);
+            new ArtistsLoadingTask().execute(siteWithArtists);
             Log.v(LOG_TAG, "Loaded from internet");
         } else {
             //Загрузка из файла реализована исключительно из соображений простоты реализации
@@ -154,7 +161,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
     }
 
 
-    private class ArtistsLoaderTask extends AsyncTask<String, Void, String> {
+    private class ArtistsLoadingTask extends AsyncTask<String, Void, String> {
         private final String LOG_TAG = getClass().getSimpleName();
 
         @Override
@@ -187,7 +194,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
     }
 
-    //Проверка наличия и содержимого кэша
+
+    //Функции для работы с кэшем
     private boolean cacheInit(File file) {
         try {
             if (file.exists()) {
@@ -211,13 +219,16 @@ public class ListOfArtistsActivityFragment extends Fragment {
         return false;
     }
 
+
     private void writeToCache(String string) {
         Log.v(LOG_TAG, "Writing to cache");
         FileOutputStream outputStream = null;
 
         try {
+
             outputStream = getContext().openFileOutput(fileCacheName, Context.MODE_PRIVATE);
             outputStream.write(string.getBytes());
+
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);
         } catch (NullPointerException e) {
@@ -233,8 +244,10 @@ public class ListOfArtistsActivityFragment extends Fragment {
         }
     }
 
+
     private void readFromCache() {
-        jsonArtists = "";
+        Log.v(LOG_TAG, "Reading from cache");
+        artistsListJsonFormat = "";
         InputStream inputStream = null;
 
         try {
@@ -246,6 +259,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                         new InputStreamReader(inputStream);
                 BufferedReader bufferedReader =
                         new BufferedReader(inputStreamReader);
+
                 String receiveString;
                 StringBuilder stringBuilder = new StringBuilder();
 
@@ -253,8 +267,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     stringBuilder.append(receiveString);
                 }
 
-                jsonArtists = stringBuilder.toString();
-                artists = Utility.getArtists(jsonArtists);
+                artistsListJsonFormat = stringBuilder.toString();
+                artists = Utility.getArtists(artistsListJsonFormat);
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);

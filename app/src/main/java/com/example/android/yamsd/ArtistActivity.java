@@ -12,6 +12,7 @@ public class ArtistActivity extends AppCompatActivity {
 
     private final String LOG_TAG = getClass().getSimpleName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {

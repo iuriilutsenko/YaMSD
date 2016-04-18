@@ -15,6 +15,7 @@ public class ListOfArtistsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_list_of_artists, menu);

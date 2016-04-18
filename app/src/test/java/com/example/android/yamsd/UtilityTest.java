@@ -57,7 +57,7 @@ public class UtilityTest {
 
         assertEquals(
                 "123 альбома, 456 песен",
-                Utility.getAlbumsAndTracksAsSingleString(123, 456)
+                Utility.getAlbumsAndTracksAsString(123, 456)
         );
     }
 
