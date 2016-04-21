@@ -15,7 +15,7 @@ import com.example.android.yamsd.ArtistsData.Artist;
 import java.io.IOException;
 import java.net.URL;
 /**
- * Фрагмент с информацией об одном артисте
+ * Фрагмент с информацией об одном артисте.
  */
 
 public class ArtistActivityFragment extends Fragment {
@@ -78,8 +78,9 @@ public class ArtistActivityFragment extends Fragment {
 
     private class loadBigCoverTask
             extends AsyncTask<Artist, Void, Bitmap> {
-        Artist artist;
+        private String LOG_TAG = getClass().getSimpleName();
 
+        Artist artist;
         ArtistViewHolder viewHolder;
 
 

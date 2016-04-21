@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +16,16 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Адаптер, нужен для того, чтобы потом беспроблемно прикручивать требуемые View-шки
+ * Адаптер списка артистов.
  */
 public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
-
-    //Кэш для хранения маленьких изображений
-    private LruCache<String, Bitmap> artistListItemCache = null;
 
     private String LOG_TAG = getClass().getSimpleName();
 
     private Context context;
 
     private ArrayList<Artist> artists;
+    private SmallImageCache smallImageCache = null;
 
 
     public ListOfArtistsAdapter(
@@ -41,14 +38,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         this.context = context;
         this.artists = artists;
 
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory()) / 1024;
-        final int cacheSize = maxMemory / 8;
-        artistListItemCache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                return bitmap.getByteCount() / 1024;
-            }
-        };
+        smallImageCache = new SmallImageCache();
     }
 
 
@@ -95,13 +85,15 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
     private class loadSmallCoverTask
             extends AsyncTask<Artist, Void, Bitmap> {
-        Artist artist;
+        private String LOG_TAG = getClass().getSimpleName();
 
+        Artist artist;
         ArtistViewHolder viewHolder;
 
         public loadSmallCoverTask(ArtistViewHolder viewHolder) {
             this.viewHolder = viewHolder;
         }
+
 
         @Override
         protected Bitmap doInBackground(Artist... params) {
@@ -109,13 +101,14 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
             try {
                 artist = params[0];
 
-                Bitmap bitmap = getBitmapFromMemCache(String.valueOf(artist.getId()));
+                Bitmap bitmap =
+                        smallImageCache.getBitmapFromMemCache(String.valueOf(artist.getId()));
                 if (bitmap == null) {
                     bitmap = (Bitmap) Utility.downloadData(
                             new URL(params[0].getSmallCoverUrlString()),
                             "bitmap"
                     );
-                    addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
+                    smallImageCache.addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
                 }
 
                 return bitmap;
@@ -131,23 +124,6 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         protected void onPostExecute(Bitmap bitmap) {
             viewHolder.setCoverBitmap(bitmap);
         }
-    }
-
-
-    //Функции для работы с кэшем изображений
-    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-        try {
-            if (getBitmapFromMemCache(key) == null) {
-                artistListItemCache.put(key, bitmap);
-            }
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Unable to load image to cache");
-        }
-    }
-
-
-    private Bitmap getBitmapFromMemCache(String key) {
-        return artistListItemCache.get(key);
     }
 
 

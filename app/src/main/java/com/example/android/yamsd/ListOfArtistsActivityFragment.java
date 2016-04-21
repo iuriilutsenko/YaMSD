@@ -35,8 +35,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
             "http://cache-default01e.cdn.yandex.net/" +
                     "download.cdn.yandex.net/mobilization-2016/artists.json";
 
-    private String artistsListJsonFormat = null;
-    private ArtistsCacheFile artistsCacheFile = null;
+    private ArtistsCache artistsCache = null;
 
 
     public ListOfArtistsActivityFragment() {
@@ -74,8 +73,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
         //Создание списка артистов
-        artistsCacheFile = new ArtistsCacheFile(getContext());
-        updateArtists(artistsCacheFile.notExistsOrEmpty());
+        artistsCache = new ArtistsCache(getContext());
+        updateArtists(artistsCache.notExistsOrEmpty());
 
         ArrayList<Artist> artistsList = new ArrayList<>(Arrays.asList(artists));
         listOfArtistsAdapter =
@@ -145,9 +144,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
             new ArtistsLoadingTask().execute(siteWithArtists);
             Log.v(LOG_TAG, "Loaded from internet");
         } else {
-            //Загрузка из файла реализована исключительно из соображений простоты реализации
             artists =
-                    artistsCacheFile.getArtistsFromCache();
+                    artistsCache.getArtistsFromCache();
             Log.v(LOG_TAG, "Loaded from cache");
         }
     }
@@ -179,7 +177,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     listOfArtistsAdapter.add(artist);
                 }
 
-                artistsCacheFile.writeToCache(result);
+                artistsCache.writeToCache(result);
             }
             listOfArtistsAdapter.notifyDataSetChanged();
         }

@@ -16,8 +16,9 @@ import java.io.InputStreamReader;
 
 /**
  * Кэш для хранения списка артистов в формате json
+ * Загрузка из файла реализована исключительно из соображений простоты реализации
  */
-public class ArtistsCacheFile {
+public class ArtistsCache {
     private String LOG_TAG = getClass().getSimpleName();
 
     private String cacheFileName = "artistsDownloaded";
@@ -27,7 +28,7 @@ public class ArtistsCacheFile {
     String artistsJsonFormat = null;
 
 
-    public ArtistsCacheFile(Context context) {
+    public ArtistsCache(Context context) {
         try {
             this.context = context;
             cacheFile = new File(context.getFilesDir(), cacheFileName);
@@ -81,7 +82,7 @@ public class ArtistsCacheFile {
 
     public void readFromCache() {
         Log.v(LOG_TAG, "Reading from cache");
-        InputStream inputStream = null;
+        InputStream inputStream;
 
         StringBuilder stringBuilder = new StringBuilder();
 
