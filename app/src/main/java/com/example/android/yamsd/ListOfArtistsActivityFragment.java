@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,13 +17,7 @@ import android.widget.Toast;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,8 +25,6 @@ import java.util.Arrays;
 /**
  * Фрагмент со списком артистов
  */
-
-//TODO - реализовать поиск по артистам
 public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
 
@@ -45,7 +36,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     "download.cdn.yandex.net/mobilization-2016/artists.json";
 
     private String artistsListJsonFormat = null;
-    private String fileCacheName = "artistsDownloaded";
+    private ArtistsCacheFile artistsCacheFile = null;
 
 
     public ListOfArtistsActivityFragment() {
@@ -83,8 +74,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
                 inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
         //Создание списка артистов
-        File cache = new File(getActivity().getFilesDir(), fileCacheName);
-        updateArtists(cacheInit(cache));
+        artistsCacheFile = new ArtistsCacheFile(getContext());
+        updateArtists(artistsCacheFile.notExistsOrEmpty());
 
         ArrayList<Artist> artistsList = new ArrayList<>(Arrays.asList(artists));
         listOfArtistsAdapter =
@@ -155,7 +146,8 @@ public class ListOfArtistsActivityFragment extends Fragment {
             Log.v(LOG_TAG, "Loaded from internet");
         } else {
             //Загрузка из файла реализована исключительно из соображений простоты реализации
-            readFromCache();
+            artists =
+                    artistsCacheFile.getArtistsFromCache();
             Log.v(LOG_TAG, "Loaded from cache");
         }
     }
@@ -187,99 +179,10 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     listOfArtistsAdapter.add(artist);
                 }
 
+                artistsCacheFile.writeToCache(result);
             }
-            writeToCache(result);
             listOfArtistsAdapter.notifyDataSetChanged();
         }
 
-    }
-
-
-    //Функции для работы с кэшем
-    private boolean cacheInit(File file) {
-        try {
-            if (file.exists()) {
-                //Проверка пустоты кэша и его удаление, если кэш пуст
-                BufferedReader buf =
-                        new BufferedReader(new FileReader(file));
-
-                if (buf.readLine() == null) {
-                    file.delete();
-                } else {
-                    return false;
-                }
-            }
-
-            return file.createNewFile();
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "IOException: " + e);
-        }
-
-        return false;
-    }
-
-
-    private void writeToCache(String string) {
-        Log.v(LOG_TAG, "Writing to cache");
-        FileOutputStream outputStream = null;
-
-        try {
-
-            outputStream = getContext().openFileOutput(fileCacheName, Context.MODE_PRIVATE);
-            outputStream.write(string.getBytes());
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "IOException: " + e);
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Nothing to write to cache: " + e);
-        } finally {
-            try {
-                outputStream.close();
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "IOException: " + e);
-            } catch (NullPointerException e) {
-                Log.e(LOG_TAG, "Nothing to close: " + e);
-            }
-        }
-    }
-
-
-    private void readFromCache() {
-        Log.v(LOG_TAG, "Reading from cache");
-        artistsListJsonFormat = "";
-        InputStream inputStream = null;
-
-        try {
-            inputStream =
-                    getContext().openFileInput(fileCacheName);
-
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader =
-                        new InputStreamReader(inputStream);
-                BufferedReader bufferedReader =
-                        new BufferedReader(inputStreamReader);
-
-                String receiveString;
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ((receiveString = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(receiveString);
-                }
-
-                artistsListJsonFormat = stringBuilder.toString();
-                artists = Utility.getArtists(artistsListJsonFormat);
-            }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "IOException: " + e);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "IOException: " + e);
-            } catch (NullPointerException e) {
-                Log.e(LOG_TAG, "Null Pointer: " + e);
-            }
-        }
     }
 }

@@ -87,19 +87,19 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
                     "ListOfArtists",
                     artist
                 );
-        new listItemLoadTask(viewHolder).execute(artist);
+        new loadSmallCoverTask(viewHolder).execute(artist);
 
         return viewHolder;
     }
 
 
-    private class listItemLoadTask
+    private class loadSmallCoverTask
             extends AsyncTask<Artist, Void, Bitmap> {
         Artist artist;
 
         ArtistViewHolder viewHolder;
 
-        public listItemLoadTask(ArtistViewHolder viewHolder) {
+        public loadSmallCoverTask(ArtistViewHolder viewHolder) {
             this.viewHolder = viewHolder;
         }
 

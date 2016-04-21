@@ -73,9 +73,10 @@ public class Utility {
 
                 .append(tracksCount)
                 .append(" ")
-                .append(Utility.pluralize(
+                .append(pluralize(
                         tracksCount,
-                        "песня"))
+                        "песня"
+                ))
 
                 .toString();
     }
@@ -145,7 +146,7 @@ public class Utility {
     }
 
 
-    //Функции для считывания и обработки скачанной json-строки
+    //Функции для считывания и переработки скачанной json-строки в список артистов
     public static String readJsonString(InputStream jsonStream)
             throws IOException {
         StringBuffer buffer = new StringBuffer();

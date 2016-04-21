@@ -38,14 +38,14 @@ public class ArtistViewHolder {
         this.artist = artist;
 
         if (activity.equals("ListOfArtists")) {
-            inflateViewsForList(R.layout.single_artist_in_list);
+            inflateViews(R.layout.single_artist_in_list);
         } else if (activity.equals("Artist")) {
-            inflateViewsForList(R.layout.fragment_artist);
+            inflateViews(R.layout.fragment_artist);
         }
     }
 
 
-    private void inflateViewsForList(int layoutId) {
+    private void inflateViews(int layoutId) {
         rootView =
                 inflater.inflate(layoutId, null);
 

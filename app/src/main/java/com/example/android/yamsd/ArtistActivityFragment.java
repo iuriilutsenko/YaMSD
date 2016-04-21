@@ -70,20 +70,20 @@ public class ArtistActivityFragment extends Fragment {
                         "Artist",
                         artist
                 );
-        new loadArtistTask(viewHolder).execute(artist);
+        new loadBigCoverTask(viewHolder).execute(artist);
 
         return viewHolder;
     }
 
 
-    private class loadArtistTask
+    private class loadBigCoverTask
             extends AsyncTask<Artist, Void, Bitmap> {
         Artist artist;
 
         ArtistViewHolder viewHolder;
 
 
-        public loadArtistTask(ArtistViewHolder viewHolder) {
+        public loadBigCoverTask(ArtistViewHolder viewHolder) {
             this.viewHolder = viewHolder;
         }
 
