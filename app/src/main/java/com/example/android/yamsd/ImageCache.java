@@ -7,7 +7,7 @@ import android.util.LruCache;
 /**
  * Кэш для сохранения маленьких картинок.
  */
-public class SmallImageCache {
+public class ImageCache {
 
     private String LOG_TAG = getClass().getSimpleName();
 
@@ -17,7 +17,7 @@ public class SmallImageCache {
     final int cacheSize = maxMemory / 8;
 
 
-    public SmallImageCache() {
+    public ImageCache() {
 
         stringBitmapLruCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
@@ -28,7 +28,7 @@ public class SmallImageCache {
     }
 
 
-    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+    public void addBitmapToMemCache(String key, Bitmap bitmap) {
         try {
             if (getBitmapFromMemCache(key) == null) {
                 stringBitmapLruCache.put(key, bitmap);

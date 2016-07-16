@@ -22,7 +22,6 @@ public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
 
-
     public ArtistActivityFragment() {
     }
 

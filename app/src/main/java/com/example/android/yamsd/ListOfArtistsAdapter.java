@@ -25,7 +25,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
     private Context context;
 
     private ArrayList<Artist> artists;
-    private SmallImageCache smallImageCache = null;
+    private ImageCache imageCache = null;
 
 
     public ListOfArtistsAdapter(
@@ -38,7 +38,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
         this.context = context;
         this.artists = artists;
 
-        smallImageCache = new SmallImageCache();
+        imageCache = new ImageCache();
     }
 
 
@@ -102,13 +102,13 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
                 artist = params[0];
 
                 Bitmap bitmap =
-                        smallImageCache.getBitmapFromMemCache(String.valueOf(artist.getId()));
+                        imageCache.getBitmapFromMemCache(String.valueOf(artist.getId()));
                 if (bitmap == null) {
                     bitmap = (Bitmap) Utility.downloadData(
                             new URL(params[0].getSmallCoverUrlString()),
                             "bitmap"
                     );
-                    smallImageCache.addBitmapToMemoryCache(String.valueOf(artist.getId()), bitmap);
+                    imageCache.addBitmapToMemCache(String.valueOf(artist.getId()), bitmap);
                 }
 
                 return bitmap;

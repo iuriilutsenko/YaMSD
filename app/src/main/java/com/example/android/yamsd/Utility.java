@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Вспомогательный класс, созданный для вынесения повторяющихся функций
@@ -165,7 +167,7 @@ public class Utility {
     }
 
 
-    public static Artist[] getArtists(String jsonString) {
+    public static ArrayList<Artist> getArtists(String jsonString) {
         try {
             JSONArray jsonArtists =
                     new JSONArray(jsonString);
@@ -175,7 +177,7 @@ public class Utility {
                 artistsList[i] = new Artist(jsonArtists.getJSONObject(i));
             }
 
-            return artistsList;
+            return new ArrayList<>(Arrays.asList(artistsList));
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
         } catch (NullPointerException e) {
