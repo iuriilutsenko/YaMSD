@@ -6,4 +6,7 @@
     <string name="title_activity_artist">Сведения об исполнителе</string>
 
     <string name="description">Описание</string>
+
+    <string name="about">Приложение "Исполнители", созданное в рамках проекта Яндекс.Мобилизация 2016</string>
+    <string name="feedback">Обратная связь</string>
 </resources>

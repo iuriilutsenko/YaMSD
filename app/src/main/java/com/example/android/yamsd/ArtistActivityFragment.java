@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,6 +18,19 @@ public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
 
+
+    public static ArtistActivityFragment newInstance(int index) {
+        ArtistActivityFragment artistActivityFragment =
+                new ArtistActivityFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        artistActivityFragment.setArguments(args);
+
+        return artistActivityFragment;
+    }
+
+
     public ArtistActivityFragment() {
     }
 
@@ -29,14 +41,12 @@ public class ArtistActivityFragment extends Fragment {
 
         try {
 
-            Intent artistInfoIntent = getActivity().getIntent();
+            int artistInfoIndex = getArguments().getInt("index", 0);
             Artist artist =
                     ArtistsCache
                             .getInstance(getContext(), null)
                             .getArtists()
-                            .get(
-                                    artistInfoIntent.getIntExtra("position", 0)
-                            );
+                            .get(artistInfoIndex);
 
             return loadArtistData(artist, inflater).getRootView();
         } catch (NullPointerException e) {

@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +15,20 @@ public class ListOfArtistsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        //Начинается реализация сменяемого объекта
+        ListOfArtistsActivityFragment listOfArtistsActivityFragment =
+                ListOfArtistsActivityFragment.newInstance();
+
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.replace(
+                R.id.fragment_container,
+                listOfArtistsActivityFragment
+        );
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
 
     }
 
@@ -26,4 +38,6 @@ public class ListOfArtistsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_list_of_artists, menu);
         return true;
     }
+
+
 }

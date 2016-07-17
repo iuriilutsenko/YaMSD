@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +18,15 @@ public class ListOfArtistsActivityFragment extends Fragment {
     private final String LOG_TAG = getClass().getSimpleName();
 
     private CacheAndListBuffer cacheAndListBuffer;
+
+
+    public static ListOfArtistsActivityFragment newInstance() {
+        ListOfArtistsActivityFragment listOfArtistsActivityFragment
+                = new ListOfArtistsActivityFragment();
+
+        return listOfArtistsActivityFragment;
+    }
+
 
     public ListOfArtistsActivityFragment() {
     }
@@ -63,20 +71,25 @@ public class ListOfArtistsActivityFragment extends Fragment {
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    startActivity(createIntent(position));
+
+                    ArtistActivityFragment artistActivityFragment =
+                            ArtistActivityFragment.newInstance(position);
+
+                    android.support.v4.app.FragmentTransaction fragmentTransaction =
+                            getFragmentManager().beginTransaction();
+
+                    fragmentTransaction.replace(
+                            R.id.fragment_container,
+                            artistActivityFragment
+                    );
+                    fragmentTransaction.addToBackStack(null);
+
+                    fragmentTransaction.commit();
                 }
             }
         );
 
         return listOfArtistsView;
-    }
-
-
-    private Intent createIntent(int position) {
-        Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
-        artistInfoIntent.putExtra("position", position);
-
-        return artistInfoIntent;
     }
 
 }
