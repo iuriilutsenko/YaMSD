@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.yamsd.ArtistsData.Artist;
+import com.squareup.picasso.Picasso;
+
 /**
  * Фрагмент с информацией об одном артисте.
  */
@@ -59,7 +61,10 @@ public class ArtistActivityFragment extends Fragment {
                         artist
                 );
 
-        ImageStorage.getInstance(getContext()).getImage(artist, viewHolder, "big");
+        Picasso
+                .with(getContext())
+                .load(artist.getBigCoverUrlString())
+                .into(viewHolder.cover);
 
         return viewHolder;
     }

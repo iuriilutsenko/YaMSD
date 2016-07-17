@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.example.android.yamsd.ArtistsData.Artist;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,10 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
                     artist
                 );
 
-        ImageStorage.getInstance(context).getImage(artist, viewHolder, "small");
+        Picasso
+                .with(context)
+                .load(artist.getSmallCoverUrlString())
+                .into(viewHolder.cover);
 
         return viewHolder;
     }

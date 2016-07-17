@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -91,10 +90,5 @@ public class ArtistViewHolder {
 
     public View getRootView() {
         return rootView;
-    }
-
-
-    public void setCoverBitmap(Bitmap coverBitmap) {
-        cover.setImageBitmap(coverBitmap);
     }
 }
