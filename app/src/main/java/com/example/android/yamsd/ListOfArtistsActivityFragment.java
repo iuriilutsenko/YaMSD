@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.yamsd.ArtistsData.Artist;
-
 /**
  * Фрагмент со списком артистов
  */
@@ -65,8 +63,7 @@ public class ListOfArtistsActivityFragment extends Fragment {
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Artist artist = cacheAndListBuffer.getArtistsCache().getArtists().get(position);
-                    startActivity(createIntent(artist));
+                    startActivity(createIntent(position));
                 }
             }
         );
@@ -75,19 +72,9 @@ public class ListOfArtistsActivityFragment extends Fragment {
     }
 
 
-    private Intent createIntent(Artist artist) {
+    private Intent createIntent(int position) {
         Intent artistInfoIntent = new Intent(getActivity(), ArtistActivity.class);
-
-        artistInfoIntent.putExtra("id", artist.getId());
-        artistInfoIntent.putExtra("name", artist.getName());
-
-        artistInfoIntent.putExtra("genres", artist.getGenres());
-        artistInfoIntent.putExtra("tracks", artist.getTracksCount());
-        artistInfoIntent.putExtra("albums", artist.getAlbumsCount());
-
-        artistInfoIntent.putExtra("description", artist.getDescription());
-
-        artistInfoIntent.putExtra("bigCover", artist.getBigCoverUrlString());
+        artistInfoIntent.putExtra("position", position);
 
         return artistInfoIntent;
     }

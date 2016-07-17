@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -105,13 +104,13 @@ public class Utility {
     }
 
 
-    //Функция для загрузки данных (картинок или списка исполнителей) из интернета
-    public static Object downloadData(URL pageWithData, String dataType)
+    //Функция для загрузки списка исполнителей из интернета
+    public static String downloadData(URL pageWithData)
             throws IOException {
         HttpURLConnection httpURLConnection =
                 (HttpURLConnection)pageWithData.openConnection();
         InputStream inputStream = null;
-        Object data = null;
+        String data = null;
 
         try {
 
@@ -125,12 +124,7 @@ public class Utility {
             Log.v(LOG_TAG, "Response code: " + response);
             inputStream = httpURLConnection.getInputStream();
 
-            //Сохранение
-            if (dataType.equals("bitmap")) {
-                data = BitmapFactory.decodeStream(inputStream);
-            } else if (dataType.equals("json")) {
-                data = readJsonString(inputStream);
-            }
+            data = readJsonString(inputStream);
         } finally {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();

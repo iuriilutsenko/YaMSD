@@ -23,6 +23,9 @@ import java.util.ArrayList;
  * Загрузка из файла реализована исключительно из соображений простоты реализации
  */
 public class ArtistsCache {
+
+    private static ArtistsCache artistsCache = null;
+
     private String LOG_TAG = getClass().getSimpleName();
 
     private String siteWithArtists =
@@ -39,7 +42,7 @@ public class ArtistsCache {
     private CacheAndListBuffer cacheAndListBuffer;
 
 
-    public ArtistsCache(
+    private ArtistsCache(
             Context context,
             CacheAndListBuffer cacheAndListBuffer
     ) {
@@ -66,6 +69,18 @@ public class ArtistsCache {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Some troubles at constructor: " + e);
         }
+    }
+
+
+    public synchronized static ArtistsCache getInstance(
+            Context context,
+            CacheAndListBuffer cacheAndListBuffer
+    ) {
+        if (artistsCache == null) {
+            artistsCache = new ArtistsCache(context, cacheAndListBuffer);
+        }
+
+        return artistsCache;
     }
 
 
@@ -208,7 +223,7 @@ public class ArtistsCache {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return (String) Utility.downloadData(new URL(params[0]), "json");
+                return (String) Utility.downloadData(new URL(params[0]));
             } catch (IOException e) {
                 Log.e(LOG_TAG, "IOException: " + e);
                 return null;

@@ -1,8 +1,6 @@
 package com.example.android.yamsd;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.yamsd.ArtistsData.Artist;
-
-import java.io.IOException;
-import java.net.URL;
 /**
  * Фрагмент с информацией об одном артисте.
  */
@@ -34,18 +29,12 @@ public class ArtistActivityFragment extends Fragment {
 
             Intent artistInfoIntent = getActivity().getIntent();
             Artist artist =
-                    new Artist(
-                            artistInfoIntent.getStringExtra("name"),
-
-                            artistInfoIntent.getStringArrayExtra("genres"),
-
-                            artistInfoIntent.getIntExtra("albums", 0),
-                            artistInfoIntent.getIntExtra("tracks", 0),
-
-                            artistInfoIntent.getStringExtra("description"),
-
-                            artistInfoIntent.getStringExtra("bigCover")
-            );
+                    ArtistsCache
+                            .getInstance(getContext(), null)
+                            .getArtists()
+                            .get(
+                                    artistInfoIntent.getIntExtra("position", 0)
+                            );
 
             return loadArtistData(artist, inflater).getRootView();
         } catch (NullPointerException e) {
@@ -69,48 +58,11 @@ public class ArtistActivityFragment extends Fragment {
                         "Artist",
                         artist
                 );
-        new loadBigCoverTask(viewHolder).execute(artist);
+
+        ImageStorage.getInstance(getContext()).getImage(artist, viewHolder, "big");
 
         return viewHolder;
     }
 
 
-    private class loadBigCoverTask
-            extends AsyncTask<Artist, Void, Bitmap> {
-        private String LOG_TAG = getClass().getSimpleName();
-
-        Artist artist;
-        ArtistViewHolder viewHolder;
-
-
-        public loadBigCoverTask(ArtistViewHolder viewHolder) {
-            this.viewHolder = viewHolder;
-        }
-
-
-        @Override
-        protected Bitmap doInBackground(Artist... params) {
-            try {
-                artist = params[0];
-
-                return (Bitmap) Utility.downloadData(
-                        new URL(params[0].getBigCoverUrlString()),
-                        "bitmap"
-                );
-
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error while loading image: " + e);
-            } catch (NullPointerException e){
-                Log.e(LOG_TAG, "Null pointer while loading image: " + e);
-            }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            viewHolder.setCoverBitmap(bitmap);
-        }
-    }
 }

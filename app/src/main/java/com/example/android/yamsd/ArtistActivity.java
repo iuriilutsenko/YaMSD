@@ -22,7 +22,13 @@ public class ArtistActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
+            getSupportActionBar().setTitle(
+                    ArtistsCache
+                        .getInstance(getApplicationContext(), null)
+                        .getArtists()
+                        .get(getIntent().getIntExtra("position", 0))
+                        .getName()
+            );
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Null pointer: " + e);
         }

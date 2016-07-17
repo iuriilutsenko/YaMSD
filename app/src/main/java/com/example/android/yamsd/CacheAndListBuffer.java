@@ -20,7 +20,7 @@ public class CacheAndListBuffer {
     public CacheAndListBuffer(Context context, Activity activity) {
 
         //Создание списка артистов
-        artistsCache = new ArtistsCache(context, this);
+        artistsCache = ArtistsCache.getInstance(context, this);
         artistsCache.updateArtists();
 
         listOfArtistsAdapter =
@@ -59,6 +59,11 @@ public class CacheAndListBuffer {
         } else {
             artistsCache.updateArtists();
         }
+    }
+
+
+    public ArrayList<Artist> getArtists() {
+        return artistsCache.getArtists();
     }
 
 }
