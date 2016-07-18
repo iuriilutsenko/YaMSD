@@ -50,6 +50,28 @@ public class ListOfArtistsActivityFragment extends Fragment {
         if (item.getItemId() == R.id.action_refresh) {
             cacheAndListBuffer.updateArtists(true);
             return true;
+        } else if (item.getItemId() == R.id.action_about) {
+            AboutFragment aboutFragment =
+                    AboutFragment.newInstance();
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getFragmentManager().beginTransaction();
+
+            fragmentTransaction.replace(
+                    R.id.fragment_container,
+                    aboutFragment
+            );
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+            return true;
+
+        } else if (item.getItemId() == R.id.action_feedback) {
+
+            EmailSender.sendMessage(getContext());
+
+            return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

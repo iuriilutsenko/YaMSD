@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">YaMSD</string>
     <string name="action_refresh">Обновить</string>
+    <string name="action_about">О программе</string>
+    <string name="action_feedback">Обратная связь</string>
 
     <string name="title_activity_list_of_artists">Исполнители</string>
     <string name="title_activity_artist">Сведения об исполнителе</string>
