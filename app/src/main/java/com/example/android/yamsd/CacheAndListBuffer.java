@@ -16,11 +16,25 @@ public class CacheAndListBuffer {
     private ListOfArtistsAdapter listOfArtistsAdapter;
     private ArtistsCache artistsCache;
 
+    private static CacheAndListBuffer cacheAndListBuffer = null;
 
-    public CacheAndListBuffer(Context context, Activity activity) {
+
+    public synchronized static CacheAndListBuffer getCacheAndListBuffer (
+            Context context,
+            Activity activity
+    ) {
+        if (cacheAndListBuffer == null) {
+            cacheAndListBuffer = new CacheAndListBuffer(context, activity);
+        }
+
+        return cacheAndListBuffer;
+    }
+
+
+    private CacheAndListBuffer(Context context, Activity activity) {
 
         //Создание списка артистов
-        artistsCache = ArtistsCache.getInstance(context, this);
+        artistsCache = new ArtistsCache(context, this);
         artistsCache.updateArtists();
 
         listOfArtistsAdapter =
@@ -45,11 +59,6 @@ public class CacheAndListBuffer {
 
     public ListOfArtistsAdapter getListOfArtistsAdapter() {
         return listOfArtistsAdapter;
-    }
-
-
-    public ArtistsCache getArtistsCache() {
-        return artistsCache;
     }
 
 

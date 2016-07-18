@@ -42,7 +42,7 @@ public class ArtistsCache {
     private CacheAndListBuffer cacheAndListBuffer;
 
 
-    private ArtistsCache(
+    public ArtistsCache(
             Context context,
             CacheAndListBuffer cacheAndListBuffer
     ) {
@@ -69,18 +69,6 @@ public class ArtistsCache {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Some troubles at constructor: " + e);
         }
-    }
-
-
-    public synchronized static ArtistsCache getInstance(
-            Context context,
-            CacheAndListBuffer cacheAndListBuffer
-    ) {
-        if (artistsCache == null) {
-            artistsCache = new ArtistsCache(context, cacheAndListBuffer);
-        }
-
-        return artistsCache;
     }
 
 

@@ -26,7 +26,6 @@ public class ListOfArtistsActivity extends AppCompatActivity {
                 R.id.fragment_container,
                 listOfArtistsActivityFragment
         );
-        fragmentTransaction.addToBackStack(null);
 
         fragmentTransaction.commit();
 

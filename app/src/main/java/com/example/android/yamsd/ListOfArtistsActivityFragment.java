@@ -2,6 +2,7 @@ package com.example.android.yamsd;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,16 +16,12 @@ import android.widget.ListView;
  * Фрагмент со списком артистов
  */
 public class ListOfArtistsActivityFragment extends Fragment {
-    private final String LOG_TAG = getClass().getSimpleName();
 
     private CacheAndListBuffer cacheAndListBuffer;
 
 
     public static ListOfArtistsActivityFragment newInstance() {
-        ListOfArtistsActivityFragment listOfArtistsActivityFragment
-                = new ListOfArtistsActivityFragment();
-
-        return listOfArtistsActivityFragment;
+        return new ListOfArtistsActivityFragment();
     }
 
 
@@ -44,6 +41,17 @@ public class ListOfArtistsActivityFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            ((AppCompatActivity) getActivity())
+                    .getSupportActionBar()
+                    .setTitle("Исполнители");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -84,7 +92,12 @@ public class ListOfArtistsActivityFragment extends Fragment {
         View listOfArtistsView =
                 inflater.inflate(R.layout.fragment_list_of_artists, container, false);
 
-        cacheAndListBuffer = new CacheAndListBuffer(getContext(), getActivity());
+        cacheAndListBuffer =
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getContext(),
+                                getActivity()
+                        );
 
         //Создание ListView, на элементы которой можно нажимать
         ListView listView = (ListView) listOfArtistsView.findViewById(R.id.artists_list);
