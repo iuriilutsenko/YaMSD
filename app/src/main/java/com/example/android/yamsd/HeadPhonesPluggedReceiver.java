@@ -15,6 +15,7 @@ public class HeadPhonesPluggedReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
             int state = intent.getIntExtra("state", -1);
 
+            //TODO - реализовать работу с наушниками
             switch(state) {
                 case 0:
                     Toast.makeText(
