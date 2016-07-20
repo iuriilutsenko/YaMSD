@@ -14,13 +14,18 @@ public class ListOfArtistsActivity extends AppCompatActivity {
     private HeadPhonesPluggedReceiver headPhonesPluggedReceiver;
     IntentFilter headPhonesIntentFilter;
 
+    private NotificationReaction notificationReaction = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_of_artists);
 
-        headPhonesPluggedReceiver = new HeadPhonesPluggedReceiver();
+        notificationReaction = new NotificationReaction(this);
+
+        headPhonesPluggedReceiver =
+                HeadPhonesPluggedReceiver.newReceiver(notificationReaction);
         headPhonesIntentFilter =
                 new IntentFilter(Intent.ACTION_HEADSET_PLUG);
 
@@ -56,5 +61,13 @@ public class ListOfArtistsActivity extends AppCompatActivity {
         registerReceiver(headPhonesPluggedReceiver, headPhonesIntentFilter);
 
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        notificationReaction.stopNotification();
+        unregisterReceiver(headPhonesPluggedReceiver);
+
+        super.onPause();
     }
 }
