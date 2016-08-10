@@ -1,5 +1,7 @@
 package com.example.android.yamsd;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -24,7 +26,6 @@ import java.util.Arrays;
 public class Utility {
 
     private static String LOG_TAG = "Utility";
-
 
     //Вспомогательные функции для создания View-шек
     @Nullable
@@ -55,7 +56,6 @@ public class Utility {
         return null;
     }
 
-
     @NonNull
     public static String getAlbumsAndTracksAsString(
             int albumsCount,
@@ -82,27 +82,19 @@ public class Utility {
                 .toString();
     }
 
-
     @Nullable
     public static String getGenresAsSingleString(String[] genres) {
-        try {
-            String stringSingleArtistGenres = "";
+        String stringSingleArtistGenres = "";
 
-            for (int i = 0; i < genres.length; i++) {
-                stringSingleArtistGenres += genres[i];
-                if (i < genres.length - 1) {
-                    stringSingleArtistGenres += ", ";
-                }
+        for (int i = 0; i < genres.length; i++) {
+            stringSingleArtistGenres += genres[i];
+            if (i < genres.length - 1) {
+                stringSingleArtistGenres += ", ";
             }
-
-            return stringSingleArtistGenres;
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "No data on genres");
         }
 
-        return null;
+        return stringSingleArtistGenres;
     }
-
 
     //Функция для загрузки списка исполнителей из интернета
     public static String downloadData(URL pageWithData)
@@ -141,7 +133,6 @@ public class Utility {
         return data;
     }
 
-
     //Функции для считывания и переработки скачанной json-строки в список артистов
     public static String readJsonString(InputStream jsonStream)
             throws IOException {
@@ -160,7 +151,6 @@ public class Utility {
         return jsonString;
     }
 
-
     public static ArrayList<Artist> getArtists(String jsonString) {
         try {
             JSONArray jsonArtists =
@@ -174,10 +164,30 @@ public class Utility {
             return new ArrayList<>(Arrays.asList(artistsList));
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Incorrect JSON: " + e);
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "JSON not loaded properly: " + e);
         }
 
         return null;
+    }
+
+    public static ArrayList<Artist> getArtistsByDefault() {
+        Artist artist = new Artist();
+        ArrayList<Artist> artists = new ArrayList<>();
+        artists.add(artist);
+
+        return artists;
+    }
+
+    public static boolean appInstalled(Context context, String packageName) {
+        try {
+            context
+                    .getPackageManager()
+                    .getPackageInfo(
+                            packageName,
+                            PackageManager.GET_ACTIVITIES
+                    );
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }

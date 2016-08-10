@@ -9,20 +9,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
 public class AboutFragment extends Fragment {
 
-
     public AboutFragment() {
     }
 
-
     public static AboutFragment newInstance() {
-        AboutFragment fragment = new AboutFragment();
-        return fragment;
+        return new AboutFragment();
     }
 
     @Override
@@ -31,47 +28,42 @@ public class AboutFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
-            CacheAndListBuffer
-                    .getCacheAndListBuffer(
-                            getContext(),
-                            getActivity()
-                    )
-                    .updateArtists(true);
-            return true;
-        } else if (item.getItemId() == R.id.action_about) {
-            AboutFragment aboutFragment =
-                    AboutFragment.newInstance();
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getActivity()
+                        )
+                        .updateArtists(true);
+                return true;
+            case R.id.action_about:
+                AboutFragment aboutFragment =
+                        AboutFragment.newInstance();
 
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getFragmentManager().beginTransaction();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getFragmentManager().beginTransaction();
 
-            fragmentTransaction.replace(
-                    R.id.fragment_container,
-                    aboutFragment
-            );
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+                fragmentTransaction.replace(
+                        R.id.fragment_container,
+                        aboutFragment
+                );
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
 
-            return true;
-
-        } else if (item.getItemId() == R.id.action_feedback) {
-
-            EmailSender.sendMessage(getContext());
-
-            return true;
-
+                return true;
+            case R.id.action_feedback:
+                EmailSender.sendMessage(getContext());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -79,8 +71,8 @@ public class AboutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_about, container, false);
-        Button sendEmailButton =
-                (Button) rootView.findViewById(R.id.sendEmailButton);
+        View sendEmailButton =
+                rootView.findViewById(R.id.SEND_EMAIL_BUTTON);
 
         sendEmailButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -98,12 +90,8 @@ public class AboutFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        try {
-            ((AppCompatActivity) getActivity())
-                    .getSupportActionBar()
-                    .setTitle("О приложении");
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        checkNotNull(((AppCompatActivity) getActivity())
+                .getSupportActionBar())
+                .setTitle("О приложении");
     }
 }

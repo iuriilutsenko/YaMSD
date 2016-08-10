@@ -40,6 +40,19 @@ public class Artist {
     private final String _bigCover = "big";
     private final String _smallCover = "small";
 
+    public Artist() {
+
+        this.id = -1;
+        this.name = "Идет загрузка";
+
+        this.genres = new String[0];
+
+        this.tracksCount = 0;
+        this.albumsCount = 0;
+
+        this.description = "Пожалуйста, подождите немного";
+    }
+
     public Artist(JSONObject jsonArtist) {
         try {
             this.id = jsonArtist.getInt(_id);

@@ -15,26 +15,22 @@ import android.widget.ListView;
 /**
  * Фрагмент со списком артистов
  */
-public class ListOfArtistsActivityFragment extends Fragment {
+public class ArtistsListFragment extends Fragment {
 
     private CacheAndListBuffer cacheAndListBuffer;
 
-
-    public static ListOfArtistsActivityFragment newInstance() {
-        return new ListOfArtistsActivityFragment();
+    public static ArtistsListFragment newInstance() {
+        return new ArtistsListFragment();
     }
 
-
-    public ListOfArtistsActivityFragment() {
+    public ArtistsListFragment() {
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -55,35 +51,33 @@ public class ListOfArtistsActivityFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
-            cacheAndListBuffer.updateArtists(true);
-            return true;
-        } else if (item.getItemId() == R.id.action_about) {
-            AboutFragment aboutFragment =
-                    AboutFragment.newInstance();
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                cacheAndListBuffer.updateArtists(true);
+                return true;
+            case R.id.action_about:
+                AboutFragment aboutFragment =
+                        AboutFragment.newInstance();
 
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getFragmentManager().beginTransaction();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(
+                                R.id.fragment_container,
+                                aboutFragment
+                        )
+                        .addToBackStack(null)
+                        .commit();
 
-            fragmentTransaction.replace(
-                    R.id.fragment_container,
-                    aboutFragment
-            );
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+                return true;
 
-            return true;
+            case R.id.action_feedback:
+                EmailSender.sendMessage(getContext());
+                return true;
 
-        } else if (item.getItemId() == R.id.action_feedback) {
-
-            EmailSender.sendMessage(getContext());
-
-            return true;
-
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,13 +89,16 @@ public class ListOfArtistsActivityFragment extends Fragment {
         cacheAndListBuffer =
                 CacheAndListBuffer
                         .getCacheAndListBuffer(
-                                getContext(),
                                 getActivity()
                         );
 
-        //Создание ListView, на элементы которой можно нажимать
         ListView listView = (ListView) listOfArtistsView.findViewById(R.id.artists_list);
-        listView.setAdapter(cacheAndListBuffer.getListOfArtistsAdapter());
+        listView.setAdapter(new ListOfArtistsAdapter(
+                getContext(),
+                R.layout.fragment_list_of_artists,
+                R.id.artists_list,
+                cacheAndListBuffer.getArtists()
+        ));
         listView.setOnItemClickListener(
             new AdapterView.OnItemClickListener() {
                 @Override
@@ -110,16 +107,14 @@ public class ListOfArtistsActivityFragment extends Fragment {
                     ArtistActivityFragment artistActivityFragment =
                             ArtistActivityFragment.newInstance(position);
 
-                    android.support.v4.app.FragmentTransaction fragmentTransaction =
-                            getFragmentManager().beginTransaction();
-
-                    fragmentTransaction.replace(
-                            R.id.fragment_container,
-                            artistActivityFragment
-                    );
-                    fragmentTransaction.addToBackStack(null);
-
-                    fragmentTransaction.commit();
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(
+                                    R.id.fragment_container,
+                                    artistActivityFragment
+                            )
+                            .addToBackStack(null)
+                            .commit();
                 }
             }
         );

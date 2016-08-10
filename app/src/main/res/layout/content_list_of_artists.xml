@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_of_artists_fragment"
-    android:name="com.example.android.yamsd.ListOfArtistsActivityFragment"
+    android:name="com.example.android.yamsd.ArtistsListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"

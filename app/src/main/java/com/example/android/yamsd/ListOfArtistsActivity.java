@@ -11,11 +11,10 @@ public class ListOfArtistsActivity extends AppCompatActivity {
 
     private final String LOG_TAG = getClass().getSimpleName();
 
-    private HeadPhonesPluggedReceiver headPhonesPluggedReceiver;
+    HeadPhonesPluggedReceiver headPhonesPluggedReceiver;
     IntentFilter headPhonesIntentFilter;
 
-    private NotificationReaction notificationReaction = null;
-
+    NotificationReaction notificationReaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +32,18 @@ public class ListOfArtistsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Начинается реализация сменяемого объекта
-        ListOfArtistsActivityFragment listOfArtistsActivityFragment =
-                ListOfArtistsActivityFragment.newInstance();
+        ArtistsListFragment artistsListFragment =
+                ArtistsListFragment.newInstance();
 
-        android.support.v4.app.FragmentTransaction fragmentTransaction =
-                getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction.replace(
-                R.id.fragment_container,
-                listOfArtistsActivityFragment
-        );
-
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(
+                    R.id.fragment_container,
+                    artistsListFragment
+                )
+                .commit();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

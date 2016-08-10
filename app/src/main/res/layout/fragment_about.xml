@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/feedback"
-        android:id="@+id/sendEmailButton"
+        android:id="@+id/SEND_EMAIL_BUTTON"
         android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

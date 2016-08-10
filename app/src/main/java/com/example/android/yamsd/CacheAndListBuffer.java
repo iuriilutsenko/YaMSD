@@ -1,7 +1,7 @@
 package com.example.android.yamsd;
 
 import android.app.Activity;
-import android.content.Context;
+import android.widget.ListView;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 
@@ -9,45 +9,38 @@ import java.util.ArrayList;
 
 /**
  * Вспомогательный класс, обеспечивающий связь между
- * ListOfArtistsActivityFragment и хранилищем артистов
+ * ArtistsListFragment и хранилищем артистов
  */
 public class CacheAndListBuffer {
 
-    private ListOfArtistsAdapter listOfArtistsAdapter;
+    private Activity activity;
     private ArtistsCache artistsCache;
 
-    private static CacheAndListBuffer cacheAndListBuffer = null;
-
+    private static CacheAndListBuffer cacheAndListBuffer;
 
     public synchronized static CacheAndListBuffer getCacheAndListBuffer (
-            Context context,
             Activity activity
     ) {
         if (cacheAndListBuffer == null) {
-            cacheAndListBuffer = new CacheAndListBuffer(context, activity);
+            cacheAndListBuffer = new CacheAndListBuffer(activity);
         }
 
         return cacheAndListBuffer;
     }
 
+    private CacheAndListBuffer(Activity activity) {
 
-    private CacheAndListBuffer(Context context, Activity activity) {
-
+        this.activity = activity;
         //Создание списка артистов
-        artistsCache = new ArtistsCache(context, this);
+        artistsCache = new ArtistsCache(activity, this);
         artistsCache.updateArtists();
-
-        listOfArtistsAdapter =
-                new ListOfArtistsAdapter(
-                        activity,
-                        R.layout.single_artist_in_list,
-                        R.id.single_artist_in_list,
-                        artistsCache.getArtists()
-                );
     }
 
-
-    public void updateArtistsViewAdapter(ArrayList<Artist> artists) {
+    public void updateArtistsViewAdapter(
+            ArrayList<Artist> artists
+    ) {
+        ListOfArtistsAdapter listOfArtistsAdapter = (ListOfArtistsAdapter)
+                ((ListView) activity.findViewById(R.id.artists_list)).getAdapter();
         listOfArtistsAdapter.clear();
         for (Artist artist : artists) {
             listOfArtistsAdapter.add(artist);
@@ -56,12 +49,6 @@ public class CacheAndListBuffer {
         listOfArtistsAdapter.notifyDataSetChanged();
     }
 
-
-    public ListOfArtistsAdapter getListOfArtistsAdapter() {
-        return listOfArtistsAdapter;
-    }
-
-
     public void updateArtists(boolean downloadArtists) {
         if (downloadArtists) {
             artistsCache.downloadArtistsFromCloud();
@@ -69,7 +56,6 @@ public class CacheAndListBuffer {
             artistsCache.updateArtists();
         }
     }
-
 
     public ArrayList<Artist> getArtists() {
         return artistsCache.getArtists();

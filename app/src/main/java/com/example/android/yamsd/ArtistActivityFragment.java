@@ -3,7 +3,6 @@ package com.example.android.yamsd;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.android.yamsd.ArtistsData.Artist;
 import com.squareup.picasso.Picasso;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Фрагмент с информацией об одном артисте.
@@ -56,38 +57,36 @@ public class ArtistActivityFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
-            CacheAndListBuffer
-                    .getCacheAndListBuffer(
-                            getContext(),
-                            getActivity()
-                    )
-                    .updateArtists(true);
-            return true;
-        } else if (item.getItemId() == R.id.action_about) {
-            AboutFragment aboutFragment =
-                    AboutFragment.newInstance();
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getActivity()
+                        )
+                        .updateArtists(true);
+                return true;
+            case R.id.action_about:
+                AboutFragment aboutFragment =
+                        AboutFragment.newInstance();
 
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getFragmentManager().beginTransaction();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_container,
+                            aboutFragment
+                        )
+                        .addToBackStack(null)
+                        .commit();
 
-            fragmentTransaction.replace(
-                    R.id.fragment_container,
-                    aboutFragment
-            );
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+                return true;
 
-            return true;
+            case R.id.action_feedback:
+                EmailSender.sendMessage(getContext());
+                return true;
 
-        } else if (item.getItemId() == R.id.action_feedback) {
-
-            EmailSender.sendMessage(getContext());
-
-            return true;
-
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -95,40 +94,25 @@ public class ArtistActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        try {
+        int artistInfoIndex = getArguments().getInt("index", 0);
+        artist =
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getActivity()
+                        )
+                        .getArtists()
+                        .get(artistInfoIndex);
 
-            int artistInfoIndex = getArguments().getInt("index", 0);
-            artist =
-                    CacheAndListBuffer
-                            .getCacheAndListBuffer(
-                                    getContext(),
-                                    getActivity()
-                            )
-                            .getArtists()
-                            .get(artistInfoIndex);
-
-            return loadArtistData(artist, inflater).getRootView();
-        } catch (NullPointerException e) {
-            Log.e(
-                    LOG_TAG,
-                    "Null Pointer Exception while creating view: " + e
-            );
-        }
-
-        return null;
+        return loadArtistData(artist, inflater).getRootView();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        try {
-            ((AppCompatActivity) getActivity())
-                    .getSupportActionBar()
-                    .setTitle(artist.getName());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        checkNotNull(((AppCompatActivity) getActivity())
+                .getSupportActionBar())
+                .setTitle(artist.getName());
     }
 
 

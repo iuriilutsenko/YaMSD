@@ -25,7 +25,6 @@ public class ArtistViewHolder {
 
     TextView description;
 
-
     public ArtistViewHolder (
             LayoutInflater inflater,
             String activity,
@@ -42,7 +41,6 @@ public class ArtistViewHolder {
             inflateViews(R.layout.fragment_artist);
         }
     }
-
 
     private void inflateViews(int layoutId) {
         rootView =
@@ -86,7 +84,6 @@ public class ArtistViewHolder {
             title.setText(artist.getName());
         }
     }
-
 
     public View getRootView() {
         return rootView;

@@ -9,11 +9,14 @@ import android.content.Intent;
 public class EmailSender {
     private static final String[] EMAIL = {"lutsenko.yuriy@yandex.ru"};
 
-
     public static void sendMessage(Context context) {
-        Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
-        sendEmailIntent.setType("message/rfc822");
-        sendEmailIntent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
-        context.startActivity(sendEmailIntent);
+        new Intent(Intent.ACTION_SEND)
+                .setType("message/rfc822")
+                .putExtra(Intent.EXTRA_EMAIL, EMAIL);
+        context.startActivity(
+                new Intent(Intent.ACTION_SEND)
+                    .setType("message/rfc822")
+                    .putExtra(Intent.EXTRA_EMAIL, EMAIL)
+        );
     }
 }

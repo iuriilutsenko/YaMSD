@@ -1,7 +1,6 @@
 package com.example.android.yamsd;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,14 +53,7 @@ public class ListOfArtistsAdapter extends ArrayAdapter<Artist> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        try {
-            return loadListItem(artists.get(position)).getRootView();
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "getRootView() works incorrectly: " + e);
-        }
-
-        return null;
+        return loadListItem(artists.get(position)).getRootView();
     }
 
 

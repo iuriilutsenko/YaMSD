@@ -18,11 +18,9 @@ public class HeadPhonesPluggedReceiver extends BroadcastReceiver {
         return new HeadPhonesPluggedReceiver(notificationReaction);
     }
 
-
     private HeadPhonesPluggedReceiver(NotificationReaction notificationReaction) {
         this.notificationReaction = notificationReaction;
     }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {

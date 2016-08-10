@@ -4,7 +4,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
@@ -24,12 +23,12 @@ public class NotificationReaction {
 
     public static String MARKET = "market://details?id=";
 
-    private Context context = null;
+    private Context context;
 
-    private NotificationCompat.Builder builder = null;
-    private NotificationManager manager = null;
+    private NotificationCompat.Builder builder;
+    private NotificationManager manager;
 
-    RemoteViews remoteViews = null;
+    RemoteViews remoteViews;
 
 
     public NotificationReaction(Context context) {
@@ -45,8 +44,8 @@ public class NotificationReaction {
                 .setSmallIcon(R.drawable.icon_add)
                 .setContent(remoteViews);
 
-        createPendingIntent(MUSIC_APP, MUSIC_ID, R.id.ListenToMusicButton);
-        createPendingIntent(RADIO_APP, RADIO_ID, R.id.ListenToRadioButton);
+        createPendingIntent(MUSIC_APP, MUSIC_ID, R.id.LISTEN_TO_MUSIC_BUTTON);
+        createPendingIntent(RADIO_APP, RADIO_ID, R.id.LISTEN_TO_RADIO_BUTTON);
 
         manager =
                 (NotificationManager) context
@@ -62,7 +61,7 @@ public class NotificationReaction {
         Intent intent = null;
         PendingIntent musicPendingIntent = null;
 
-        if (appInstalled(packageName)) {
+        if (Utility.appInstalled(context, packageName)) {
             intent = new Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(kindOfIntentForApp)
@@ -77,25 +76,11 @@ public class NotificationReaction {
         musicPendingIntent =
                 PendingIntent.getActivity(context, 0, intent, 0);
 
-
-        if (remoteViews != null) {
-            remoteViews.setOnClickPendingIntent(
-                    buttonId,
-                    musicPendingIntent
-            );
-        }
+        remoteViews.setOnClickPendingIntent(
+                buttonId,
+                musicPendingIntent
+        );
     }
-
-    private boolean appInstalled(String packageName) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-    }
-
 
     public void startNotification() {
         manager.notify(0, builder.build());

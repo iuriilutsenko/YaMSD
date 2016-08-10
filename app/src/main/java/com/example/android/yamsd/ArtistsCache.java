@@ -41,7 +41,6 @@ public class ArtistsCache {
 
     private CacheAndListBuffer cacheAndListBuffer;
 
-
     public ArtistsCache(
             Context context,
             CacheAndListBuffer cacheAndListBuffer
@@ -71,7 +70,6 @@ public class ArtistsCache {
         }
     }
 
-
     public void writeToCache(String string) {
         Log.v(LOG_TAG, "Writing to cache");
         FileOutputStream outputStream = null;
@@ -98,7 +96,6 @@ public class ArtistsCache {
             }
         }
     }
-
 
     public void readFromCache() {
         Log.v(LOG_TAG, "Reading from cache");
@@ -128,11 +125,8 @@ public class ArtistsCache {
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException: " + e);
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Null Pointer: " + e);
         }
     }
-
 
     public boolean notExistsOrEmpty() {
         try {
@@ -153,7 +147,6 @@ public class ArtistsCache {
         return true;
     }
 
-
     public void updateArtists() {
         if (notExistsOrEmpty()) {
             downloadArtistsFromCloud();
@@ -163,27 +156,11 @@ public class ArtistsCache {
         }
     }
 
-
     public void downloadArtistsFromCloud() {
         //Костыль, срабатывающий при самом первом запуске приложения
         //Будет загрузка из данной ниже json-строки, а не из интернета
         //или кэша
-        artists = Utility.getArtists("[{\n" +
-                "    \"id\": -1,\n" +
-                "    \"name\": \"Идет загрузка артистов\",\n" +
-                "    \"genres\": [\n" +
-                "      \"Пожалуйста, подождите\"\n" +
-                "    ],\n" +
-                "    \"tracks\": 0,\n" +
-                "    \"albums\": 0,\n" +
-                "    \"link\": \"\",\n" +
-                "    \"description\": \"Nothing to say\",\n" +
-                "    \"cover\": {\n" +
-                "      \"small\": \"http://avatars.yandex.net/get-music-content/dfc531f5.p.1080505/300x300\",\n" +
-                "      \"big\": \"http://avatars.yandex.net/get-music-content/dfc531f5.p.1080505/300x300\"\n" +
-                "    }\n" +
-                "  }]"
-        );
+        artists = Utility.getArtistsByDefault();
         Toast.makeText(context, "Обновление...", Toast.LENGTH_SHORT).show();
         new ArtistsLoadingTask().execute(siteWithArtists);
         Log.v(LOG_TAG, "Loaded from internet");
