@@ -1,19 +1,20 @@
 package com.example.android.yamsd;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.yamsd.ArtistsData.Artist;
+import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.URL;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Фрагмент с информацией об одном артисте.
  */
@@ -22,8 +23,70 @@ public class ArtistActivityFragment extends Fragment {
 
     private String LOG_TAG = getClass().getSimpleName();
 
+    Artist artist;
+
+
+    public static ArtistActivityFragment newInstance(int index) {
+        ArtistActivityFragment artistActivityFragment =
+                new ArtistActivityFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        artistActivityFragment.setArguments(args);
+
+        return artistActivityFragment;
+    }
+
 
     public ArtistActivityFragment() {
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getActivity()
+                        )
+                        .updateArtists(true);
+                return true;
+            case R.id.action_about:
+                AboutFragment aboutFragment =
+                        AboutFragment.newInstance();
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_container,
+                            aboutFragment
+                        )
+                        .addToBackStack(null)
+                        .commit();
+
+                return true;
+
+            case R.id.action_feedback:
+                EmailSender.sendMessage(getContext());
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -31,32 +94,25 @@ public class ArtistActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        try {
+        int artistInfoIndex = getArguments().getInt("index", 0);
+        artist =
+                CacheAndListBuffer
+                        .getCacheAndListBuffer(
+                                getActivity()
+                        )
+                        .getArtists()
+                        .get(artistInfoIndex);
 
-            Intent artistInfoIntent = getActivity().getIntent();
-            Artist artist =
-                    new Artist(
-                            artistInfoIntent.getStringExtra("name"),
+        return loadArtistData(artist, inflater).getRootView();
+    }
 
-                            artistInfoIntent.getStringArrayExtra("genres"),
 
-                            artistInfoIntent.getIntExtra("albums", 0),
-                            artistInfoIntent.getIntExtra("tracks", 0),
-
-                            artistInfoIntent.getStringExtra("description"),
-
-                            artistInfoIntent.getStringExtra("bigCover")
-            );
-
-            return loadArtistData(artist, inflater).getRootView();
-        } catch (NullPointerException e) {
-            Log.e(
-                    LOG_TAG,
-                    "Null Pointer Exception while creating view: " + e
-            );
-        }
-
-        return null;
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkNotNull(((AppCompatActivity) getActivity())
+                .getSupportActionBar())
+                .setTitle(artist.getName());
     }
 
 
@@ -70,48 +126,14 @@ public class ArtistActivityFragment extends Fragment {
                         "Artist",
                         artist
                 );
-        new loadBigCoverTask(viewHolder).execute(artist);
+
+        Picasso
+                .with(getContext())
+                .load(artist.getBigCoverUrlString())
+                .into(viewHolder.cover);
 
         return viewHolder;
     }
 
 
-    private class loadBigCoverTask
-            extends AsyncTask<Artist, Void, Bitmap> {
-        private String LOG_TAG = getClass().getSimpleName();
-
-        Artist artist;
-        ArtistViewHolder viewHolder;
-
-
-        public loadBigCoverTask(ArtistViewHolder viewHolder) {
-            this.viewHolder = viewHolder;
-        }
-
-
-        @Override
-        protected Bitmap doInBackground(Artist... params) {
-            try {
-                artist = params[0];
-
-                return (Bitmap) Utility.downloadData(
-                        new URL(params[0].getBigCoverUrlString()),
-                        "bitmap"
-                );
-
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Error while loading image: " + e);
-            } catch (NullPointerException e){
-                Log.e(LOG_TAG, "Null pointer while loading image: " + e);
-            }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            viewHolder.setCoverBitmap(bitmap);
-        }
-    }
 }

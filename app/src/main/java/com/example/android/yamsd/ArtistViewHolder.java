@@ -1,6 +1,5 @@
 package com.example.android.yamsd;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ public class ArtistViewHolder {
 
     TextView description;
 
-
     public ArtistViewHolder (
             LayoutInflater inflater,
             String activity,
@@ -43,7 +41,6 @@ public class ArtistViewHolder {
             inflateViews(R.layout.fragment_artist);
         }
     }
-
 
     private void inflateViews(int layoutId) {
         rootView =
@@ -88,13 +85,7 @@ public class ArtistViewHolder {
         }
     }
 
-
     public View getRootView() {
         return rootView;
-    }
-
-
-    public void setCoverBitmap(Bitmap coverBitmap) {
-        cover.setImageBitmap(coverBitmap);
     }
 }
